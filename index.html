@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>職場法律實戰班 - 吵架篇 | 專業課程報名</title>
+    <title>EVA職場法律-吵架篇 | 課程報名</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -81,89 +81,210 @@
         html {
             scroll-behavior: smooth;
         }
+
+        /* Modal 動畫 */
+        .modal-enter {
+            opacity: 0;
+            transform: scale(0.95);
+        }
+        .modal-enter-active {
+            opacity: 1;
+            transform: scale(1);
+            transition: opacity 300ms ease-out, transform 300ms ease-out;
+        }
+        .modal-exit {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .modal-exit-active {
+            opacity: 0;
+            transform: scale(0.95);
+            transition: opacity 200ms ease-in, transform 200ms ease-in;
+        }
+
+        /* FAQ 動畫效果 */
+        .faq-answer {
+            transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        .faq-answer.open {
+            max-height: 1000px;
+            opacity: 1;
+        }
+        .faq-icon {
+            transition: transform 0.3s ease;
+        }
+        .faq-icon.rotate {
+            transform: rotate(180deg);
+        }
+
+        /* 側邊導覽列 (Side Menu) 動畫 */
+        #side-menu {
+            transition: transform 0.3s ease-in-out;
+            transform: translateX(100%); /* 預設隱藏在右側 */
+        }
+        #side-menu.open {
+            transform: translateX(0); /* 滑入 */
+        }
+        #menu-overlay {
+            transition: opacity 0.3s ease-in-out, visibility 0.3s;
+            opacity: 0;
+            visibility: hidden;
+        }
+        #menu-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
     </style>
 </head>
-<body class="bg-british-cream antialiased bg-paper-texture">
+<body class="bg-british-cream antialiased bg-paper-texture" id="top">
 
     <!-- 導航列 -->
     <nav class="bg-british-green text-british-gold py-3 shadow-lg sticky top-0 z-50 border-b-2 border-british-gold">
         <div class="container mx-auto px-6 flex justify-between items-center">
-            <!-- Logo 區域 -->
-            <a href="#" class="flex items-center gap-3 group">
-                <!-- 【請在此處替換您的 Logo 圖片連結】建議尺寸: 正方形或圓形 -->
-                <img src="https://placehold.co/100x100/0F2F24/C5A059?text=LW" alt="LEX WORKPLACE Logo" class="h-12 w-12 object-contain border border-british-gold rounded-full p-1 group-hover:opacity-80 transition bg-british-green">
-                
-                <div class="font-bold tracking-widest font-serif flex flex-col justify-center">
-                    <span class="text-xl leading-none">LEX</span>
-                    <span class="text-[0.6rem] tracking-[0.3em] text-british-cream font-sans uppercase">WORKPLACE</span>
-                </div>
+            <!-- Logo 區域 (復原為長方形 Logo 圖片) -->
+            <a href="#top" class="flex items-center">
+                <img src="https://drive.google.com/thumbnail?id=1xrhrHTWGHnMbwGZFFAQPFEWaKeDDdBlQ&sz=w400" 
+                     alt="LEX WORKPLACE Logo" 
+                     class="h-12 w-auto object-contain">
             </a>
 
             <div class="flex items-center gap-4">
-                <!-- 
-                    更新後的按鈕樣式 
-                    1. 使用 border-[#D4AF37] 搭配透明背景
-                    2. hover 時填充金色背景與深綠文字
-                    3. 修正 font-serif-header 為 font-serif 以對應現有設定
-                    4. 修正 target ID 為 'register' 以對應現有區塊 ID
-                -->
-                <button onclick="document.getElementById('register').scrollIntoView({ behavior: 'smooth' })" class="hidden md:block px-6 py-2 border border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#1A3C34] transition-colors duration-300 font-serif text-sm tracking-widest uppercase cursor-pointer">
-                  立即席次預約
-                </button>
+                <!-- 已移除 立即席次預約 按鈕 -->
                 
-                <!-- 手機版顯示簡單圖示 -->
-                <a href="#register" class="md:hidden text-british-gold text-xl border border-british-gold p-2 rounded">
-                    報名
-                </a>
+                <!-- 漢堡選單按鈕 (Hamburger Button) -->
+                <button onclick="toggleMenu()" class="text-british-gold text-2xl p-2 focus:outline-none hover:text-white transition">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
             </div>
         </div>
     </nav>
 
-    <!-- 主視覺 Hero Section -->
-    <header class="relative z-10 w-full py-20 lg:py-32 px-6 bg-[#1A3C34] text-[#F5F2E8] border-b-8 border-[#D4AF37]">
-        <div class="max-w-4xl mx-auto text-center space-y-8">
-            <div class="inline-block px-4 py-1 border border-[#D4AF37]/50 text-[#D4AF37] text-xs tracking-[0.2em] uppercase mb-4">
-                Professional Workshop 2024
+    <!-- 側邊選單 (Side Menu Drawer) -->
+    <!-- 遮罩層 -->
+    <div id="menu-overlay" onclick="toggleMenu()" class="fixed inset-0 bg-black/70 z-[60] backdrop-blur-sm"></div>
+    <!-- 選單本體 -->
+    <div id="side-menu" class="fixed top-0 right-0 h-full w-80 bg-british-green border-l-4 border-british-gold z-[70] shadow-2xl flex flex-col">
+        <!-- 關閉按鈕 -->
+        <div class="p-6 flex justify-end">
+            <button onclick="toggleMenu()" class="text-british-gold text-2xl hover:text-white transition">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+        
+        <!-- 選單連結 -->
+        <div class="flex-1 px-8 py-4 space-y-2 overflow-y-auto">
+            <div class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4 border-b border-gray-600 pb-2">Navigation</div>
+            
+            <a href="#syllabus" onclick="toggleMenu()" class="block text-lg text-white hover:text-british-gold py-3 border-b border-british-gold/20 font-serif">
+                <i class="fa-solid fa-list-check w-8 text-center text-sm"></i> 課程大綱
+            </a>
+            <a href="#lecturer" onclick="toggleMenu()" class="block text-lg text-white hover:text-british-gold py-3 border-b border-british-gold/20 font-serif">
+                <i class="fa-solid fa-user-tie w-8 text-center text-sm"></i> 講師介紹
+            </a>
+            <a href="#info" onclick="toggleMenu()" class="block text-lg text-white hover:text-british-gold py-3 border-b border-british-gold/20 font-serif">
+                <i class="fa-solid fa-circle-info w-8 text-center text-sm"></i> 課程資訊
+            </a>
+            <a href="#faq" onclick="toggleMenu()" class="block text-lg text-white hover:text-british-gold py-3 border-b border-british-gold/20 font-serif">
+                <i class="fa-solid fa-circle-question w-8 text-center text-sm"></i> 常見問題
+            </a>
+            <a href="#register" onclick="toggleMenu()" class="block text-lg text-british-gold font-bold bg-british-gold/10 hover:bg-british-gold hover:text-british-green py-3 px-4 mt-6 rounded border border-british-gold text-center transition">
+                立即報名
+            </a>
+        </div>
+
+        <!-- 底部資訊 -->
+        <div class="p-6 bg-british-lightGreen text-center text-gray-400 text-xs">
+            <!-- 已移除 LEX WORKPLACE 文字 -->
+            <p>© 2024 All Rights Reserved.</p>
+        </div>
+    </div>
+
+    <!-- 主視覺 Hero Section (去除漸層，回歸實色) -->
+    <!-- 修改：將 py-20 lg:py-32 縮減為 py-12 lg:py-20，減少上下留白 -->
+    <header class="relative z-10 w-full py-12 lg:py-20 px-6 bg-[#0F2F24] text-[#F5F2E8] border-b-8 border-[#D4AF37] overflow-hidden">
+        
+        <!-- 背景材質紋理 (保留紋理，移除下方的漸層 div) -->
+        <div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/dark-leather.png')] mix-blend-overlay"></div>
+
+        <!-- 修改：將 space-y-6 縮減為 space-y-4，讓內部元件排列更緊湊 -->
+        <div class="relative z-10 max-w-4xl mx-auto text-center space-y-4">
+            <!-- 已移除 Professional Workshop 2024 標籤 -->
+            
+            <!-- 圖片展示區 (修改：包含兩張圖片) -->
+            <div class="relative flex flex-col items-center justify-center mb-4 group space-y-4">
+                <!-- 已移除金色氛圍光暈 (去除漸層效果) -->
+                
+                <!-- 第一張標題圖片 -->
+                <img src="https://drive.google.com/thumbnail?id=1C7DA7GG9ZTPwkGXqIQUXez_ssJDlL7wA&sz=w1366" 
+                     alt="職場法律：吵架的藝術" 
+                     class="relative z-10 max-w-[80%] md:max-w-lg h-auto object-contain drop-shadow-2xl hover:scale-[1.01] transition duration-700 ease-out"
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                
+                <!-- 備用文字 -->
+                <h1 class="hidden font-serif text-5xl md:text-7xl font-bold leading-tight mb-2 text-[#F5F2E8]">
+                    職場法律<br />
+                    <span class="text-[#D4AF37] italic">吵架的藝術</span>
+                </h1>
+
+                <!-- 新增第二張圖片 -->
+                <img src="https://drive.google.com/thumbnail?id=1mdx4FgpmHTCy7waJSW6wMF4Lf7fQXN27&sz=w1366" 
+                     alt="副標題圖片" 
+                     class="relative z-10 max-w-[80%] md:max-w-lg h-auto object-contain drop-shadow-xl hover:scale-[1.01] transition duration-700 ease-out"
+                     onerror="this.style.display='none';">
             </div>
             
-            <h1 class="font-serif text-5xl md:text-7xl font-bold leading-tight">
-                職場法律實戰：<br />
-                <span class="text-[#D4AF37] italic">吵架的藝術</span>
-            </h1>
-            <p class="text-lg md:text-xl text-gray-300 mb-10 max-w-2xl mx-auto font-sans leading-relaxed">
-                優雅地反擊，合法的防禦。<br>
-                別讓情緒主導戰場，讓法律成為您職場溝通最強硬的底氣。
-            </p>
+            <!-- 已移除 核心金句 & 副標 -->
             
-            <!-- 按鈕區域 -->
-            <div class="pt-8 flex flex-col md:flex-row gap-4 justify-center items-center">
-                <!-- 按鈕 1: 捲動到課程大綱 (id="syllabus") -->
-                <button onclick="document.getElementById('syllabus').scrollIntoView({ behavior: 'smooth' })" class="px-8 py-4 border border-[#D4AF37] text-[#D4AF37] font-bold tracking-widest text-sm uppercase transition-all hover:bg-[#D4AF37] hover:text-[#1A3C34] cursor-pointer w-full md:w-auto">
+            <div class="pt-6 flex flex-col md:flex-row gap-4 justify-center items-center">
+                <button onclick="document.getElementById('syllabus').scrollIntoView({ behavior: 'smooth' })" class="px-8 py-4 border border-[#D4AF37] text-[#D4AF37] font-bold tracking-widest text-sm uppercase transition-all hover:bg-[#D4AF37] hover:text-[#1A3C34] cursor-pointer w-full md:w-auto backdrop-blur-sm">
                     查看課程大綱
                 </button>
-                
-                <!-- 按鈕 2: 捲動到報名表單 (id="register") -->
                 <button onclick="document.getElementById('register').scrollIntoView({ behavior: 'smooth' })" class="group relative px-8 py-4 bg-[#D4AF37] text-[#1A3C34] font-bold tracking-widest text-sm uppercase transition-all hover:bg-white hover:shadow-[0_0_20px_rgba(212,175,55,0.5)] cursor-pointer w-full md:w-auto">
                     <span class="flex items-center justify-center gap-2">
                         預約報名 
-                        <!-- 替換 Icons.ArrowRight 為 FontAwesome -->
                         <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
                     </span>
                 </button>
             </div>
         </div>
     </header>
-    <!-- 課程痛點引言 -->
-    <section class="py-20 px-6">
+
+    <!-- 課程痛點引言 (加入 ID="intro") -->
+    <section id="intro" class="py-20 px-6">
         <div class="container mx-auto max-w-4xl text-center">
             <i class="fa-solid fa-quote-left text-4xl text-british-gold/50 mb-6"></i>
-            <h2 class="text-2xl md:text-3xl font-bold text-british-green mb-8 leading-normal">
-                「在職場上，聲音大不代表有理，<br>懂得『法律邊界』的人，才是最後的贏家。」
+            <h2 class="text-2xl md:text-3xl font-bold text-british-green mb-4 leading-normal">
+                「文明人吵架，是講規矩的！」
             </h2>
-            <p class="text-gray-600 leading-8 mb-12 font-sans">
-                您是否曾經在會議中被惡意針對卻不知如何反擊？<br>
-                面對不合理的合約或工作要求，如何拒絕而不失禮貌？<br>
-                本課程不教你大吼大叫，而是教你用法律條文作為最強的護城河。
+            
+            <!-- 新增小標：金色字體凸顯重點 -->
+            <div class="text-lg md:text-xl text-british-gold font-bold mb-10 font-serif tracking-wide leading-relaxed">
+                在職場上，聲音大不代表有理，<br>
+                懂得『規矩』的人，才是最後的贏家。
+            </div>
+
+            <p class="text-gray-600 leading-8 mb-12 font-sans text-base md:text-lg">
+                您是否曾在會議中，明明被惡意針對，<br>
+                卻因顧及形象與立場，而不知該如何回應？<br>
+                <br>
+                又或者，面對不合理的合約條款或工作要求，<br>
+                想拒絕，卻擔心話一出口就破壞關係、影響評價？<br>
+                <br>
+                越是退讓，對方越是得寸進尺...<br>
+                <br>
+                在職場與現實世界裡，<br>
+                吃虧的往往不是沒道理，<br>
+                而是不懂用「規矩」保護自己。<br>
+                <br>
+                這堂課，不教你硬碰硬，<br>
+                而是教你在關鍵時刻，用法律邏輯站穩立場，<br>
+                讓對方知道——你不是好惹的！<br>
+                <br>
+                這不只是一次學習，<br>
+                而是一套能反覆使用、長期保護你的專業武器。
             </p>
             <div class="w-24 h-1 bg-british-gold mx-auto"></div>
         </div>
@@ -171,76 +292,442 @@
 
     <!-- 課程亮點 -->
     <section id="syllabus" class="py-20 px-6 bg-white border-y border-gray-200">
-        <div class="container mx-auto max-w-6xl">
+        <div class="container mx-auto max-w-7xl">
             <div class="text-center mb-16">
                 <h3 class="text-british-gold font-sans uppercase tracking-widest text-sm font-bold mb-2">SYLLABUS</h3>
-                <h2 class="text-3xl md:text-4xl font-bold text-british-green">課程三大核心模組</h2>
+                <h2 class="text-3xl md:text-4xl font-bold text-british-green">課程四大核心</h2>
             </div>
 
-            <div class="grid md:grid-cols-3 gap-10">
-                <!-- 模組 1 -->
-                <div class="p-8 border border-gray-200 hover:border-british-gold transition duration-300 bg-british-cream relative group">
-                    <div class="absolute top-0 right-0 bg-british-green text-british-gold w-12 h-12 flex items-center justify-center font-bold text-xl font-serif">1</div>
-                    <div class="text-british-gold text-4xl mb-6"><i class="fa-solid fa-gavel"></i></div>
-                    <h3 class="text-xl font-bold text-british-green mb-4">界線與防禦</h3>
-                    <p class="text-gray-600 text-sm leading-relaxed font-sans">
-                        釐清職場性騷擾、言語霸凌與「合理指導」的法律界線。如何蒐證？如何留下有效紀錄而不觸犯妨害秘密罪？
-                    </p>
-                </div>
-
-                <!-- 模組 2 -->
-                <div class="p-8 border border-gray-200 hover:border-british-gold transition duration-300 bg-british-cream relative group">
-                    <div class="absolute top-0 right-0 bg-british-green text-british-gold w-12 h-12 flex items-center justify-center font-bold text-xl font-serif">2</div>
-                    <div class="text-british-gold text-4xl mb-6"><i class="fa-solid fa-file-contract"></i></div>
-                    <h3 class="text-xl font-bold text-british-green mb-4">邏輯與談判</h3>
-                    <p class="text-gray-600 text-sm leading-relaxed font-sans">
-                        勞基法是你的底氣。學習閱讀合約陷阱，以及在薪資談判、離職交接時，如何運用法律術語優雅地「吵」贏對方。
-                    </p>
-                </div>
-
-                <!-- 模組 3 -->
-                <div class="p-8 border border-gray-200 hover:border-british-gold transition duration-300 bg-british-cream relative group">
-                    <div class="absolute top-0 right-0 bg-british-green text-british-gold w-12 h-12 flex items-center justify-center font-bold text-xl font-serif">3</div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                <!-- 核心 1 -->
+                <div class="p-8 border border-gray-200 hover:border-british-gold transition duration-300 bg-british-cream relative group flex flex-col">
+                    <div class="absolute top-0 right-0 bg-british-green text-british-gold w-10 h-10 flex items-center justify-center font-bold text-lg font-serif">1</div>
                     <div class="text-british-gold text-4xl mb-6"><i class="fa-solid fa-scale-balanced"></i></div>
-                    <h3 class="text-xl font-bold text-british-green mb-4">實戰模擬演練</h3>
-                    <p class="text-gray-600 text-sm leading-relaxed font-sans">
-                        現場分組模擬真實職場衝突場景（資遣面談、績效申訴），由執業律師現場點評，修正你的溝通策略。
-                    </p>
+                    <h3 class="text-xl font-bold text-british-green mb-4 pb-3 border-b border-gray-300">吵與不吵的選擇</h3>
+                    <ul class="text-gray-600 text-sm leading-relaxed font-sans space-y-2 flex-1">
+                        <li class="flex items-start"><span class="text-british-gold mr-2">▪</span>吵架前的考慮</li>
+                        <li class="flex items-start"><span class="text-british-gold mr-2">▪</span>吵架的時機點</li>
+                        <li class="flex items-start"><span class="text-british-gold mr-2">▪</span>不吵能做什麼</li>
+                    </ul>
+                </div>
+
+                <!-- 核心 2 -->
+                <div class="p-8 border border-gray-200 hover:border-british-gold transition duration-300 bg-british-cream relative group flex flex-col">
+                    <div class="absolute top-0 right-0 bg-british-green text-british-gold w-10 h-10 flex items-center justify-center font-bold text-lg font-serif">2</div>
+                    <div class="text-british-gold text-4xl mb-6"><i class="fa-solid fa-bullseye"></i></div>
+                    <h3 class="text-xl font-bold text-british-green mb-4 pb-3 border-b border-gray-300">吵架要有重點</h3>
+                    <ul class="text-gray-600 text-sm leading-relaxed font-sans space-y-2 flex-1">
+                        <li class="flex items-start"><span class="text-british-gold mr-2">▪</span>工作範圍常見爭點</li>
+                        <li class="flex items-start"><span class="text-british-gold mr-2">▪</span>離職解僱常見爭點</li>
+                        <li class="flex items-start"><span class="text-british-gold mr-2">▪</span>騷擾霸凌常見爭點</li>
+                        <li class="flex items-start"><span class="text-british-gold mr-2">▪</span>工資工時常見爭點</li>
+                    </ul>
+                </div>
+
+                <!-- 核心 3 -->
+                <div class="p-8 border border-gray-200 hover:border-british-gold transition duration-300 bg-british-cream relative group flex flex-col">
+                    <div class="absolute top-0 right-0 bg-british-green text-british-gold w-10 h-10 flex items-center justify-center font-bold text-lg font-serif">3</div>
+                    <div class="text-british-gold text-4xl mb-6"><i class="fa-solid fa-gavel"></i></div>
+                    <h3 class="text-xl font-bold text-british-green mb-4 pb-3 border-b border-gray-300">吵架要懂程序</h3>
+                    <ul class="text-gray-600 text-sm leading-relaxed font-sans space-y-2 flex-1">
+                        <li class="flex items-start"><span class="text-british-gold mr-2">▪</span>兩個戰場</li>
+                        <li class="flex items-start"><span class="text-british-gold mr-2">▪</span>勞工局：申訴和調解</li>
+                        <li class="flex items-start"><span class="text-british-gold mr-2">▪</span>法院：訴訟和保全</li>
+                    </ul>
+                </div>
+
+                <!-- 核心 4 -->
+                <div class="p-8 border border-gray-200 hover:border-british-gold transition duration-300 bg-british-cream relative group flex flex-col">
+                    <div class="absolute top-0 right-0 bg-british-green text-british-gold w-10 h-10 flex items-center justify-center font-bold text-lg font-serif">4</div>
+                    <div class="text-british-gold text-4xl mb-6"><i class="fa-solid fa-folder-open"></i></div>
+                    <h3 class="text-xl font-bold text-british-green mb-4 pb-3 border-b border-gray-300">吵架要有準備</h3>
+                    <ul class="text-gray-600 text-sm leading-relaxed font-sans space-y-2 flex-1">
+                        <li class="flex items-start"><span class="text-british-gold mr-2">▪</span>到底誰舉證</li>
+                        <li class="flex items-start"><span class="text-british-gold mr-2">▪</span>證據的類型</li>
+                        <li class="flex items-start"><span class="text-british-gold mr-2">▪</span>常見的策略</li>
+                    </ul>
                 </div>
             </div>
+
+            <!-- 課程亮點區塊 (重新設計：輕盈優雅風格) -->
+            <div class="mt-8 relative">
+                <!-- 裝飾背景：金色斜紋 -->
+                <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/diagonal-stripes.png')] opacity-50 pointer-events-none"></div>
+                
+                <div class="relative bg-white border border-gray-200 border-l-8 border-l-british-gold shadow-lg p-8 md:p-10 flex flex-col md:flex-row items-center gap-8 group hover:shadow-xl transition duration-300">
+                    
+                    <!-- 左側圖示 -->
+                    <div class="flex-shrink-0">
+                        <div class="w-16 h-16 rounded-full bg-british-cream border border-british-gold text-british-gold flex items-center justify-center text-3xl shadow-sm group-hover:scale-110 transition duration-500">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        </div>
+                    </div>
+
+                    <!-- 右側內容 -->
+                    <div class="text-center md:text-left flex-1">
+                        <h3 class="text-2xl font-bold text-british-green mb-2 font-serif flex items-center justify-center md:justify-start gap-3">
+                            課程亮點 
+                            <span class="text-xs bg-british-gold text-white px-2 py-1 tracking-widest font-sans rounded-sm">HIGHLIGHTS</span>
+                        </h3>
+                        <p class="text-gray-600 text-lg leading-relaxed">
+                            報名學員可於課前提前提出自身的職場疑問，
+                            <strong class="text-british-green border-b-2 border-british-gold/30 pb-0.5">Eva 老師將於課堂中親自解析與回應</strong>，
+                            讓學習內容更貼近你的真實職場情境。
+                        </p>
+                    </div>
+
+                    <!-- 背景浮水印 -->
+                    <div class="absolute right-0 top-0 text-[8rem] text-british-gold/5 -rotate-12 pointer-events-none translate-x-10 -translate-y-4">
+                        <i class="fa-regular fa-lightbulb"></i>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </section>
 
-    <!-- 講師介紹 -->
-    <section class="py-20 px-6 bg-british-green text-white">
+    <!-- 講師介紹 (加入 ID="lecturer") -->
+    <section id="lecturer" class="py-20 px-6 bg-british-green text-white">
         <div class="container mx-auto max-w-5xl flex flex-col md:flex-row items-center gap-12">
             <div class="w-full md:w-1/3">
-                <!-- 模擬照片框 -->
                 <div class="w-full aspect-[3/4] bg-gray-700 border-4 border-british-gold relative shadow-2xl overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1556157382-97eda2d62296?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="講師照片" class="object-cover w-full h-full grayscale hover:grayscale-0 transition duration-500">
+                    <!-- 修改：更換講師照片，並移除 grayscale 特效 -->
+                    <img src="https://drive.google.com/thumbnail?id=1G4tkOWq9iwPi6lTKATXI92MEoZ9Dqr0f&sz=w800" 
+                         alt="講師照片" 
+                         class="object-cover w-full h-full transition duration-500">
                 </div>
             </div>
             <div class="w-full md:w-2/3">
                 <h2 class="text-british-gold text-lg tracking-widest mb-2 font-sans">LECTURER</h2>
-                <h3 class="text-3xl md:text-4xl font-bold mb-6">王牌律師團隊</h3>
-                <p class="text-gray-300 leading-relaxed mb-6 font-light">
-                    由三位資深勞動法律師組成的講師群，擁有超過 15 年的法庭實戰經驗。他們不只懂法條，更懂人情世故與職場潛規則。我們的目標不是要你隨時興訟，而是讓你擁有「不戰而屈人之兵」的智慧。
+                <!-- 修改：將標題改為「講師 | Eva」 -->
+                <h3 class="text-3xl md:text-4xl font-bold mb-6">講師 | Eva</h3>
+                
+                <p class="text-gray-300 leading-relaxed mb-6 font-light text-justify">
+                    Eva 老師擁有 15 年以上人資管理與勞動法令實務經驗，長期協助企業處理勞資爭議與職場管理問題。<br>她擅長快速洞察問題核心，並能提出具體、可執行的解決方案，而非紙上談兵。
                 </p>
-                <ul class="space-y-4">
-                    <li class="flex items-center"><i class="fa-solid fa-check text-british-gold mr-4"></i> 曾任上市櫃公司法務長</li>
-                    <li class="flex items-center"><i class="fa-solid fa-check text-british-gold mr-4"></i> 處理超過 500 件勞資爭議調解</li>
-                    <li class="flex items-center"><i class="fa-solid fa-check text-british-gold mr-4"></i> 暢銷書《職場生存法律學》作者</li>
+                
+                <ul class="space-y-4 text-sm md:text-base">
+                    <li class="flex items-start">
+                        <i class="fa-solid fa-check text-british-gold mr-4 mt-1"></i> 
+                        <span>專精於 <strong>勞資協調、工作管理、內部規章擬定、法令諮詢與績效管理</strong>。</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fa-solid fa-check text-british-gold mr-4 mt-1"></i> 
+                        <span>帶領「灃康人力資源」、「灃禾管理顧問」與「企業危機百科」團隊。</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fa-solid fa-check text-british-gold mr-4 mt-1"></i> 
+                        <span>深耕勞動法令實務，累積服務 <strong>百家以上企業</strong>，客戶涵蓋上市櫃公司與指標性中小企業。</span>
+                    </li>
                 </ul>
             </div>
         </div>
     </section>
 
-     <!-- 報名表單區塊 (核心功能) -->
-     <section id="register" class="py-24 px-6 relative">
+    <!-- 課程資訊 (加入 ID="info") -->
+    <section id="info" class="py-20 px-6 bg-white border-b border-gray-200">
+        <div class="container mx-auto max-w-4xl">
+            <div class="text-center mb-12">
+                <h3 class="text-british-gold font-sans uppercase tracking-widest text-sm font-bold mb-2">INFORMATION</h3>
+                <h2 class="text-3xl md:text-4xl font-bold text-british-green font-serif">課程資訊</h2>
+                <div class="w-16 h-1 bg-british-gold mx-auto mt-4"></div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-6 font-sans">
+                <!-- 1. 日期 -->
+                <div class="flex p-6 border border-gray-200 bg-british-cream rounded-sm hover:border-british-gold transition duration-300">
+                    <div class="text-4xl text-british-gold mr-5"><i class="fa-solid fa-calendar-days"></i></div>
+                    <div>
+                        <h4 class="text-lg font-bold text-british-green mb-2">開課場次 & 日期</h4>
+                        <ul class="text-gray-700 space-y-1">
+                            <li class="flex items-center"><span class="w-2 h-2 bg-british-gold rounded-full mr-2"></span>台北場：4/25 (六)</li>
+                            <li class="flex items-center"><span class="w-2 h-2 bg-british-gold rounded-full mr-2"></span>台中場：5/16 (六)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 2. 時間 -->
+                <div class="flex p-6 border border-gray-200 bg-british-cream rounded-sm hover:border-british-gold transition duration-300">
+                    <div class="text-4xl text-british-gold mr-5"><i class="fa-regular fa-clock"></i></div>
+                    <div>
+                        <h4 class="text-lg font-bold text-british-green mb-2">課程時間</h4>
+                        <p class="text-gray-700 text-lg font-bold">14:00 - 17:00</p>
+                        <p class="text-sm text-gray-500 mt-1">課程總時數 3 小時</p>
+                    </div>
+                </div>
+
+                <!-- 3. 地點 (恢復為單格) -->
+                <div class="flex p-6 border border-gray-200 bg-british-cream rounded-sm hover:border-british-gold transition duration-300">
+                    <div class="text-4xl text-british-gold mr-5"><i class="fa-solid fa-map-location-dot"></i></div>
+                    <div>
+                        <h4 class="text-lg font-bold text-british-green mb-2">上課地點</h4>
+                        <p class="text-gray-700 leading-relaxed text-lg font-bold">
+                            等確定開班才會告知場地
+                        </p>
+                        <p class="text-sm text-gray-500 mt-1">詳細地址將於開課前通知。</p>
+                    </div>
+                </div>
+
+                <!-- 4. 費用 (恢復為單格) -->
+                <div class="flex p-6 border border-gray-200 bg-british-cream rounded-sm hover:border-british-gold transition duration-300">
+                    <div class="text-4xl text-british-gold mr-5"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+                    <div>
+                        <h4 class="text-lg font-bold text-british-green mb-2">課程費用</h4>
+                        <ul class="text-gray-700 space-y-2">
+                            <!-- 加回原價顯示 -->
+                            <li class="flex items-center text-gray-600">原價：$2,400</li>
+                            
+                            <li class="flex flex-wrap items-center text-british-green font-bold text-xl">
+                                早鳥價：$2,200
+                                <!-- 修改：改回實心紅色色塊 (bg-red-700 text-white) -->
+                                <span class="ml-2 text-sm bg-red-700 text-white px-3 py-1 rounded-full shadow-md border border-red-800 tracking-wide flex items-center">
+                                    <i class="fa-solid fa-hourglass-half mr-1 text-xs"></i> 4/6 止
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 底部權益聲明 (移至此處) -->
+            <div class="mt-8 text-center text-xs text-gray-500 leading-relaxed border-t border-gray-200 pt-6 tracking-wide">
+                📌 主辦單位保留課程內容、講師、場次與授課方式調整之權利，如有異動將提前通知，不影響學員權益。
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ 常見問題 (加入 ID="faq") - 已修復補回 -->
+    <section id="faq" class="py-20 px-6 bg-british-cream border-b border-gray-200">
+        <div class="container mx-auto max-w-4xl">
+            <div class="text-center mb-12">
+                <h3 class="text-british-gold font-sans uppercase tracking-widest text-sm font-bold mb-2">Q&A</h3>
+                <h2 class="text-3xl md:text-4xl font-bold text-british-green font-serif">常見問題 FAQ</h2>
+                <div class="w-16 h-1 bg-british-gold mx-auto mt-4"></div>
+            </div>
+
+            <div class="space-y-10">
+                <!-- 分類一 -->
+                <div>
+                    <h3 class="text-xl font-bold text-british-gold border-b-2 border-british-gold/30 pb-2 mb-6 inline-block">
+                        一、課程與教學內容相關
+                    </h3>
+                    <div class="space-y-4">
+                        <!-- Q1 (原 Q2) -->
+                        <div class="bg-white border border-gray-200 shadow-sm hover:border-british-gold transition duration-300">
+                            <button onclick="toggleFAQ(this)" class="w-full text-left p-6 flex justify-between items-center focus:outline-none">
+                                <h4 class="text-british-green font-bold text-lg flex items-start">
+                                    <span class="text-british-gold mr-3">Q1</span> 這堂課主要在教什麼？
+                                </h4>
+                                <i class="fa-solid fa-chevron-down text-british-gold faq-icon"></i>
+                            </button>
+                            <div class="faq-answer px-6 bg-gray-50">
+                                <div class="pb-6 pt-2 border-t border-gray-100">
+                                    <p class="text-gray-700 leading-relaxed text-sm md:text-base">
+                                        本課程聚焦於職場勞資爭議中的法律責任判斷、調解程序與舉證策略，從實務角度解析職場衝突可能產生的法律影響，並協助學員在衝突發生時，清楚知道如何自保、不吃虧。
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Q2 (原 Q3) -->
+                        <div class="bg-white border border-gray-200 shadow-sm hover:border-british-gold transition duration-300">
+                            <button onclick="toggleFAQ(this)" class="w-full text-left p-6 flex justify-between items-center focus:outline-none">
+                                <h4 class="text-british-green font-bold text-lg flex items-start">
+                                    <span class="text-british-gold mr-3">Q2</span> 課程內容會偏理論還是實務？
+                                </h4>
+                                <i class="fa-solid fa-chevron-down text-british-gold faq-icon"></i>
+                            </button>
+                            <div class="faq-answer px-6 bg-gray-50">
+                                <div class="pb-6 pt-2 border-t border-gray-100">
+                                    <p class="text-gray-700 leading-relaxed text-sm md:text-base">
+                                        課程以實務為主、理論為輔，包含真實職場案例解析、常見衝突情境拆解，以及可立即應用的應對方式，協助學員在實際工作情境中有效運用。
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Q3 (原 Q4) -->
+                        <div class="bg-white border border-gray-200 shadow-sm hover:border-british-gold transition duration-300">
+                            <button onclick="toggleFAQ(this)" class="w-full text-left p-6 flex justify-between items-center focus:outline-none">
+                                <h4 class="text-british-green font-bold text-lg flex items-start">
+                                    <span class="text-british-gold mr-3">Q3</span> 課程內容偏資方還是勞方？
+                                </h4>
+                                <i class="fa-solid fa-chevron-down text-british-gold faq-icon"></i>
+                            </button>
+                            <div class="faq-answer px-6 bg-gray-50">
+                                <div class="pb-6 pt-2 border-t border-gray-100">
+                                    <div class="text-gray-700 leading-relaxed text-sm md:text-base space-y-3">
+                                        <p>本課程不偏向單一立場，而是以「實務操作與法律風險控管」為核心。</p>
+                                        <p>課程將同時說明勞方與資方在職場衝突中的常見誤區與法律責任：</p>
+                                        <ul class="list-disc pl-5 space-y-2">
+                                            <li><span class="font-bold text-british-green">對勞方而言：</span><br>學習如何保護自身生存權與勞動權益，掌握正確的舉證與溝通方式，避免在資訊不對稱或情緒衝突中反而成為不利的一方。</li>
+                                            <li><span class="font-bold text-british-green">對資方／主管／人資而言：</span><br>學習建立合法的管理與溝通流程，從源頭降低違法風險，並在爭議發生時，以最合法、成本最低的方式進行調解與協商。</li>
+                                        </ul>
+                                        <p>無論您是一般員工、主管或人資角色，皆能從課程中理解自身立場及應注意的法律界線。</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Q4 (原 Q1 - 移至此處) -->
+                        <div class="bg-white border border-gray-200 shadow-sm hover:border-british-gold transition duration-300">
+                            <button onclick="toggleFAQ(this)" class="w-full text-left p-6 flex justify-between items-center focus:outline-none">
+                                <h4 class="text-british-green font-bold text-lg flex items-start">
+                                    <span class="text-british-gold mr-3">Q4</span> 誰適合這堂課？
+                                </h4>
+                                <i class="fa-solid fa-chevron-down text-british-gold faq-icon"></i>
+                            </button>
+                            <div class="faq-answer px-6 bg-gray-50">
+                                <div class="pb-6 pt-2 border-t border-gray-100">
+                                    <ul class="text-gray-700 leading-relaxed text-sm md:text-base list-disc pl-5 space-y-2">
+                                        <li>曾在職場衝突中感到委屈、卻不知道如何反應的人</li>
+                                        <li>想保護自己，卻又不想把事情搞到失控的人</li>
+                                        <li>主管、人資，或需要處理衝突與管理風險的你</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Q5 -->
+                        <div class="bg-white border border-gray-200 shadow-sm hover:border-british-gold transition duration-300">
+                            <button onclick="toggleFAQ(this)" class="w-full text-left p-6 flex justify-between items-center focus:outline-none">
+                                <h4 class="text-british-green font-bold text-lg flex items-start">
+                                    <span class="text-british-gold mr-3">Q5</span> 沒有法律背景也聽得懂嗎？
+                                </h4>
+                                <i class="fa-solid fa-chevron-down text-british-gold faq-icon"></i>
+                            </button>
+                            <div class="faq-answer px-6 bg-gray-50">
+                                <div class="pb-6 pt-2 border-t border-gray-100">
+                                    <p class="text-gray-700 leading-relaxed text-sm md:text-base">
+                                        可以。本課程以一般上班族為設計對象，不需具備法律背景，Eva 老師將以白話方式說明法律概念與實務應用。
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Q6 -->
+                        <div class="bg-white border border-gray-200 shadow-sm hover:border-british-gold transition duration-300">
+                            <button onclick="toggleFAQ(this)" class="w-full text-left p-6 flex justify-between items-center focus:outline-none">
+                                <h4 class="text-british-green font-bold text-lg flex items-start">
+                                    <span class="text-british-gold mr-3">Q6</span> 課程形式與時數為何？
+                                </h4>
+                                <i class="fa-solid fa-chevron-down text-british-gold faq-icon"></i>
+                            </button>
+                            <div class="faq-answer px-6 bg-gray-50">
+                                <div class="pb-6 pt-2 border-t border-gray-100">
+                                    <p class="text-gray-700 leading-relaxed text-sm md:text-base">
+                                        本課程為【實體課程】，課程時數為 3 小時。
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 分類二 -->
+                <div>
+                    <h3 class="text-xl font-bold text-british-gold border-b-2 border-british-gold/30 pb-2 mb-6 inline-block">
+                        二、報名與繳費相關
+                    </h3>
+                    <div class="space-y-4">
+                        <!-- Q7 (原 Q6) -->
+                        <div class="bg-white border border-gray-200 shadow-sm hover:border-british-gold transition duration-300">
+                            <button onclick="toggleFAQ(this)" class="w-full text-left p-6 flex justify-between items-center focus:outline-none">
+                                <h4 class="text-british-green font-bold text-lg flex items-start">
+                                    <span class="text-british-gold mr-3">Q7</span> 什麼是「預約募資制」？
+                                </h4>
+                                <i class="fa-solid fa-chevron-down text-british-gold faq-icon"></i>
+                            </button>
+                            <div class="faq-answer px-6 bg-gray-50">
+                                <div class="pb-6 pt-2 border-t border-gray-100">
+                                    <p class="text-gray-700 leading-relaxed text-sm md:text-base">
+                                        本課程採【預約募資制】，請先填寫報名表。每一場次皆為獨立計算人數，單一場次滿 30 人就正式開班。未達開班人數前，不會進行收費。
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Q8 (原 Q7) -->
+                        <div class="bg-white border border-gray-200 shadow-sm hover:border-british-gold transition duration-300">
+                            <button onclick="toggleFAQ(this)" class="w-full text-left p-6 flex justify-between items-center focus:outline-none">
+                                <h4 class="text-british-green font-bold text-lg flex items-start">
+                                    <span class="text-british-gold mr-3">Q8</span> 什麼時候需要繳費？
+                                </h4>
+                                <i class="fa-solid fa-chevron-down text-british-gold faq-icon"></i>
+                            </button>
+                            <div class="faq-answer px-6 bg-gray-50">
+                                <div class="pb-6 pt-2 border-t border-gray-100">
+                                    <div class="text-gray-700 leading-relaxed text-sm md:text-base space-y-3">
+                                        <p>僅於課程確定開班後才需繳費。確認開班後，小編將以 IG 私訊 通知付款資訊，請於指定期限內完成繳費，完成繳費後方視為報名成功。</p>
+                                        <p>若未於期限內完成繳費，將視為放棄該次名額。</p>
+                                        <div class="bg-british-green/5 p-4 border-l-4 border-british-gold">
+                                            <p class="text-sm font-bold text-british-green mb-1">⚠️ 重要提醒</p>
+                                            <p class="text-sm">為保障已完成繳費學員權益及課程後續作業，未完成繳費者日後再次報名課程需先繳交 50% 訂金；累計 3 次者，將無法再參與本系列課程。若提前告知無法繳費之原因，則不適用上述規定。</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                 <!-- 分類三 -->
+                <div>
+                    <h3 class="text-xl font-bold text-british-gold border-b-2 border-british-gold/30 pb-2 mb-6 inline-block">
+                        三、退費與名額使用相關
+                    </h3>
+                    <div class="space-y-4">
+                        <!-- Q9 (原 Q8) -->
+                        <div class="bg-white border border-gray-200 shadow-sm hover:border-british-gold transition duration-300">
+                            <button onclick="toggleFAQ(this)" class="w-full text-left p-6 flex justify-between items-center focus:outline-none">
+                                <h4 class="text-british-green font-bold text-lg flex items-start">
+                                    <span class="text-british-gold mr-3">Q9</span> 繳費後臨時無法參加，可以退費嗎？
+                                </h4>
+                                <i class="fa-solid fa-chevron-down text-british-gold faq-icon"></i>
+                            </button>
+                            <div class="faq-answer px-6 bg-gray-50">
+                                <div class="pb-6 pt-2 border-t border-gray-100">
+                                    <div class="text-gray-700 leading-relaxed text-sm md:text-base space-y-3">
+                                        <p>課程確定開班並完成繳費後，恕不提供退費服務。</p>
+                                        <p>惟學員可選擇將已繳費用保留作為未來折抵，適用於：</p>
+                                        <ul class="list-disc pl-5">
+                                            <li>Eva 老師其他「職場法律系列課程」</li>
+                                            <li>紅人學院其他課程 (<a href="https://tcta.tw/allclass-pic" target="_blank" class="text-british-gold underline hover:text-british-green">點擊查看課程</a>)</li>
+                                        </ul>
+                                        <p>若未來課程費用 高於本次金額，需補足差額；<br>若未來課程費用 低於本次金額，差額恕不另行退還。</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Q10 (原 Q9) -->
+                        <div class="bg-white border border-gray-200 shadow-sm hover:border-british-gold transition duration-300">
+                            <button onclick="toggleFAQ(this)" class="w-full text-left p-6 flex justify-between items-center focus:outline-none">
+                                <h4 class="text-british-green font-bold text-lg flex items-start">
+                                    <span class="text-british-gold mr-3">Q10</span> 如果報名後沒有收到任何通知怎麼辦？
+                                </h4>
+                                <i class="fa-solid fa-chevron-down text-british-gold faq-icon"></i>
+                            </button>
+                            <div class="faq-answer px-6 bg-gray-50">
+                                <div class="pb-6 pt-2 border-t border-gray-100">
+                                    <p class="text-gray-700 leading-relaxed text-sm md:text-base">
+                                        完成報名後，請留意 IG 私訊與 Email。若於 3 日內未收到任何通知，請主動私訊小編確認，謝謝。
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 原本在此處的底部權益聲明已移除 -->
+        </div>
+    </section>
+
+    <!-- 報名表單區塊 (核心功能) -->
+    <section id="register" class="py-24 px-6 relative">
         <div class="container mx-auto max-w-2xl">
             
             <div class="bg-british-cream p-8 md:p-12 shadow-2xl double-border relative z-10">
-                <!-- 裝飾徽章 -->
                 <div class="absolute -top-6 left-1/2 transform -translate-x-1/2 bg-british-green text-british-gold w-12 h-12 rounded-full flex items-center justify-center border-2 border-british-gold">
                     <i class="fa-solid fa-pen-nib"></i>
                 </div>
@@ -249,13 +736,10 @@
                     <h2 class="text-3xl font-bold text-british-green mb-2">課程報名表</h2>
                     <p class="text-gray-500 text-sm font-sans">Registration Form</p>
                     <div class="divider-custom w-1/2 mx-auto"><i class="fa-solid fa-star text-xs"></i></div>
-                    <p class="text-sm text-gray-600">請填寫真實資料，我們將於 24 小時內寄送匯款資訊至您的信箱。</p>
+                    <!-- 修改提示文字 -->
+                    <p class="text-sm text-gray-600">請填寫資料，送出後，小編將於收到表單後以 IG 私訊與您確認。</p>
                 </div>
 
-                <!-- 
-                    Google Form 串接設定 (已自動填入您的表單資料)
-                    Form Action: 1FAIpQLSev8l51n5kacMQwUMWxrR3o0qg0F7mDEqdMHUzTtONDf_6eoQ
-                -->
                 <script>var submitted = false;</script>
                 <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted) {handleSuccessUI();}"></iframe>
                 
@@ -266,58 +750,115 @@
                       class="space-y-6" 
                       onsubmit="submitted=true;">
                     
-                    <!-- 姓名 -->
+                    <!-- 1. 姓名 (必填) -->
                     <div>
                         <label for="name" class="block text-british-green font-bold mb-2 text-sm uppercase tracking-wide">姓名 (Full Name) <span class="text-red-500">*</span></label>
                         <input type="text" id="name" name="entry.255761638" required class="w-full bg-white border border-gray-300 p-3 text-british-green form-input placeholder-gray-400" placeholder="請輸入您的姓名">
                     </div>
 
-                    <!-- 聯絡電話 -->
+                    <!-- 2. Instagram 帳號 (必填) -->
+                    <div>
+                        <label for="instagram" class="block text-british-green font-bold mb-2 text-sm uppercase tracking-wide">Instagram 帳號 <span class="text-red-500">*</span></label>
+                        <input type="text" id="instagram" name="entry.1574080863" required class="w-full bg-white border border-gray-300 p-3 text-british-green form-input placeholder-gray-400" placeholder="your_instagram_id">
+                        <p class="text-xs text-gray-500 mt-2 leading-relaxed">
+                            （ 請填寫正確可搜尋的 IG 帳號，以利後續通知；若不確定是否填寫正確，請於送出表單後主動私訊小編告知，謝謝 😊 ）
+                        </p>
+                    </div>
+
+                    <!-- 3. 場次 (必填) - 已與電話對調順序 -->
+                    <div>
+                        <label class="block text-british-green font-bold mb-3 text-sm uppercase tracking-wide">場次 (Session) <span class="text-red-500">*</span></label>
+                        <div class="space-y-3">
+                            <label class="flex items-center p-3 border border-gray-300 bg-white hover:border-british-gold cursor-pointer transition">
+                                <input type="radio" name="entry.1996132441" value="台北場 4/25(六)" required class="form-radio text-british-gold h-5 w-5 focus:ring-british-gold border-gray-300">
+                                <span class="ml-3 text-british-green font-medium">台北場 4/25(六)</span>
+                            </label>
+                            <label class="flex items-center p-3 border border-gray-300 bg-white hover:border-british-gold cursor-pointer transition">
+                                <input type="radio" name="entry.1996132441" value="台中場 5/16(六)" required class="form-radio text-british-gold h-5 w-5 focus:ring-british-gold border-gray-300">
+                                <span class="ml-3 text-british-green font-medium">台中場 5/16(六)</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- 4. 聯絡電話 (必填) - 已與場次對調順序 -->
                     <div>
                         <label for="phone" class="block text-british-green font-bold mb-2 text-sm uppercase tracking-wide">聯絡電話 (Phone) <span class="text-red-500">*</span></label>
                         <input type="tel" id="phone" name="entry.922447564" required class="w-full bg-white border border-gray-300 p-3 text-british-green form-input placeholder-gray-400" placeholder="09xx-xxx-xxx">
                     </div>
 
-                    <!-- 場次選擇 -->
-                    <div>
-                        <label class="block text-british-green font-bold mb-3 text-sm uppercase tracking-wide">場次 (Session) <span class="text-red-500">*</span></label>
-                        <div class="space-y-3">
-                            <label class="flex items-center p-3 border border-gray-300 bg-white hover:border-british-gold cursor-pointer transition">
-                                <input type="radio" name="entry.1996132441" value="台北場" required class="form-radio text-british-gold h-5 w-5 focus:ring-british-gold border-gray-300">
-                                <span class="ml-3 text-british-green font-medium">台北場</span>
-                            </label>
-                            <label class="flex items-center p-3 border border-gray-300 bg-white hover:border-british-gold cursor-pointer transition">
-                                <input type="radio" name="entry.1996132441" value="台中場" required class="form-radio text-british-gold h-5 w-5 focus:ring-british-gold border-gray-300">
-                                <span class="ml-3 text-british-green font-medium">台中場</span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <!-- Email -->
+                    <!-- 5. 信箱 (必填) -->
                     <div>
                         <label for="email" class="block text-british-green font-bold mb-2 text-sm uppercase tracking-wide">電子信箱 (Email) <span class="text-red-500">*</span></label>
                         <input type="email" id="email" name="entry.177261986" required class="w-full bg-white border border-gray-300 p-3 text-british-green form-input placeholder-gray-400" placeholder="example@email.com">
                     </div>
 
-                    <!-- Instagram 帳號 -->
+                    <!-- 6. 職業別 (選填) - 下拉選單改版 -->
                     <div>
-                        <label for="instagram" class="block text-british-green font-bold mb-2 text-sm uppercase tracking-wide">Instagram 帳號 <span class="text-red-500">*</span></label>
-                        <input type="text" id="instagram" name="entry.1574080863" required class="w-full bg-white border border-gray-300 p-3 text-british-green form-input placeholder-gray-400" placeholder="@your_instagram_id">
-                        <p class="text-xs text-gray-500 mt-2 leading-relaxed">
-                            （請填寫正確可搜尋的 IG 帳號，若不確定是否填寫正確，請於送出表單後主動私訊小編告知，謝謝 😊）
-                        </p>
+                        <label for="occupation" class="block text-british-green font-bold mb-2 text-sm uppercase tracking-wide">職業別 (Occupation) <span class="text-gray-500 font-normal normal-case">(選填)</span></label>
+                        <div class="relative">
+                            <!-- 修改：移除 required 屬性 -->
+                            <select id="occupation" name="entry.1645565300" class="w-full bg-white border border-gray-300 p-3 text-british-green form-input appearance-none cursor-pointer" onchange="toggleOtherInput(this)">
+                                <option value="" disabled selected>請選擇您的職業類別...</option>
+                                <option value="一般上班族">一般上班族</option>
+                                <option value="企業主／老闆">企業主／老闆</option>
+                                <option value="主管／管理職">主管／管理職</option>
+                                <option value="HR／人資">HR／人資</option>
+                                <option value="自由接案／自營者">自由接案／自營者</option>
+                                <option value="__other_option__">其他</option>
+                            </select>
+                            <!-- 下拉選單箭頭圖示 -->
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-british-gold">
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </div>
+                        </div>
+                        
+                        <!-- 其他選項輸入框 (預設隱藏) -->
+                        <div id="other_occupation_container" class="hidden mt-3">
+                            <label for="other_occupation_text" class="block text-sm text-gray-600 mb-1">請輸入其他職業：</label>
+                            <input type="text" id="other_occupation_text" name="entry.1645565300.other_option_response" class="w-full bg-white border border-gray-300 p-2 text-british-green form-input placeholder-gray-400 border-b-2 focus:border-british-gold outline-none" placeholder="請輸入...">
+                        </div>
                     </div>
 
-                    <!-- 想詢問的問題 -->
+                    <!-- 7. 想詢問的問題 -->
                     <div>
                         <label for="message" class="block text-british-green font-bold mb-2 text-sm uppercase tracking-wide">想詢問的問題？</label>
-                        <textarea id="message" name="entry.1357532118" rows="3" class="w-full bg-white border border-gray-300 p-3 text-british-green form-input placeholder-gray-400" placeholder="如果有其他疑問，歡迎填寫..."></textarea>
+                        <textarea id="message" name="entry.1357532118" rows="3" class="w-full bg-white border border-gray-300 p-3 text-british-green form-input placeholder-gray-400" placeholder="你的職場疑問..."></textarea>
                     </div>
 
-                    <!-- 優惠碼 -->
+                    <!-- 8. 優惠碼 -->
                     <div>
                         <label for="promo" class="block text-british-green font-bold mb-2 text-sm uppercase tracking-wide">優惠碼</label>
                         <input type="text" id="promo" name="entry.1016751022" class="w-full bg-white border border-gray-300 p-3 text-british-green form-input placeholder-gray-400" placeholder="若有優惠碼請在此輸入">
+                        <!-- 新增備註文字 -->
+                        <p class="text-xs text-gray-500 mt-2">
+                            （未填寫者恕不適用優惠價格）
+                        </p>
+                    </div>
+
+                    <!-- 9. 重要說明與確認 (必填) -->
+                    <div class="bg-british-green/5 p-6 border border-british-gold/30">
+                        <label class="block text-british-green font-bold mb-4 text-sm uppercase tracking-wide">重要說明與確認 <span class="text-red-500">*</span></label>
+                        <div class="space-y-4">
+                            <!-- 選項 1 -->
+                            <label class="flex items-start cursor-pointer group">
+                                <div class="flex items-center h-6">
+                                    <input type="checkbox" name="entry.1981735458" value="我已了解本課程採【預約募資制】，滿 30 人就開班，確定開班後才需繳費；須於期限內完成繳費，未繳費視為放棄名額。" required class="form-checkbox h-5 w-5 text-british-gold border-gray-300 focus:ring-british-gold">
+                                </div>
+                                <div class="ml-3 text-sm text-gray-700 leading-relaxed group-hover:text-british-green transition">
+                                    我已了解本課程採【預約募資制】，滿 30 人就開班，確定開班後才需繳費；須於期限內完成繳費，未繳費視為放棄名額。
+                                </div>
+                            </label>
+                            
+                            <!-- 選項 2 -->
+                            <label class="flex items-start cursor-pointer group">
+                                <div class="flex items-center h-6">
+                                    <input type="checkbox" name="entry.1981735458" value="我已了解 未於期限內繳費者，日後再次報名需繳 50% 訂金；累計 3 次未繳費者，將無法再參與本系列課程。（提前告知原因者不適用）" required class="form-checkbox h-5 w-5 text-british-gold border-gray-300 focus:ring-british-gold">
+                                </div>
+                                <div class="ml-3 text-sm text-gray-700 leading-relaxed group-hover:text-british-green transition">
+                                    我已了解 未於期限內繳費者，日後再次報名需繳 50% 訂金；累計 3 次未繳費者，將無法再參與本系列課程。（提前告知原因者不適用）
+                                </div>
+                            </label>
+                        </div>
                     </div>
 
                     <!-- 提交按鈕 -->
@@ -329,44 +870,46 @@
                         * 送出即代表同意本課程之隱私權政策與退費規範。
                     </p>
                 </form>
-                
-                <!-- 成功訊息區塊 (預設隱藏) -->
-                <div id="successMessage" class="hidden text-center py-10">
-                    <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-100 text-green-600 mb-6">
-                        <i class="fa-solid fa-check text-2xl"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold text-british-green mb-4">報名成功！</h3>
-                    <p class="text-gray-600 mb-8">
-                        謝謝您的報名！<br>
-                        小編收到表單後會主動私訊與您確認，<br>
-                        若 3 日內未收到私訊通知，請再主動聯繫我們協助確認。
-                    </p>
-                    <button onclick="resetForm()" class="bg-british-gold text-british-green px-6 py-2 font-bold rounded hover:bg-yellow-600 transition">
-                        返回填寫新表單
-                    </button>
-                </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
+    <!-- 修改：恢復原本的內距 (py-10 -> py-12) -->
     <footer class="bg-british-green text-white py-12 border-t-4 border-british-gold">
         <div class="container mx-auto px-6 text-center flex flex-col items-center">
             
-            <!-- Footer Logo -->
-            <div class="mb-6 flex flex-col items-center group">
-                <img src="https://placehold.co/100x100/0F2F24/C5A059?text=LW" alt="Logo" class="h-20 w-20 mb-4 rounded-full border-2 border-british-gold p-1 bg-british-green">
-                <div class="text-2xl font-serif font-bold text-british-gold tracking-widest">LEX WORKPLACE</div>
+            <!-- 修改：大幅減少 Logo 與下方文字的間距 (mb-6 -> mb-2) -->
+            <div class="mb-2 flex flex-col items-center">
+                <!-- Footer Logo -->
+                <!-- 修改：移除圖片下方的 mb-4，讓它貼近下方的文字 -->
+                <img src="https://drive.google.com/thumbnail?id=1xrhrHTWGHnMbwGZFFAQPFEWaKeDDdBlQ&sz=w400" 
+                     alt="Logo" 
+                     class="h-14 w-auto mb-0 object-contain">
             </div>
 
-            <p class="text-gray-400 text-sm mb-6 max-w-lg mx-auto">
-                法律不是冷冰冰的條文，而是保護職涯的盾牌。<br>
-                Copyright © 2024 職場法律實戰班. All rights reserved.
+            <!-- 修改：更新文案與年份 -->
+            <p class="text-gray-400 text-sm mb-8 max-w-lg mx-auto leading-relaxed tracking-wide">
+                我思故我在！人不會思考，跟死魚有什麼兩樣？<br>
+                Copyright © 2026 職場法律實戰班. All rights reserved.
             </p>
-            <div class="flex justify-center space-x-6 text-british-gold">
-                <a href="#" class="hover:text-white transition"><i class="fa-brands fa-facebook-f"></i></a>
-                <a href="#" class="hover:text-white transition"><i class="fa-brands fa-instagram"></i></a>
-                <a href="#" class="hover:text-white transition"><i class="fa-solid fa-envelope"></i></a>
+            
+            <!-- 社群連結 (修改：放大按鈕尺寸 w-10 -> w-12, h-10 -> h-12, text-lg -> text-xl) -->
+            <div class="flex justify-center gap-6">
+                <!-- FB -->
+                <a href="https://www.facebook.com/profile.php?id=61572494396270" target="_blank" class="w-12 h-12 flex items-center justify-center rounded-full border border-british-gold text-british-gold hover:bg-british-gold hover:text-british-green transition duration-300 text-xl group">
+                    <i class="fa-brands fa-facebook-f group-hover:scale-110 transition-transform"></i>
+                </a>
+                
+                <!-- IG -->
+                <a href="https://www.instagram.com/legal._.thinking/" target="_blank" class="w-12 h-12 flex items-center justify-center rounded-full border border-british-gold text-british-gold hover:bg-british-gold hover:text-british-green transition duration-300 text-xl group">
+                    <i class="fa-brands fa-instagram group-hover:scale-110 transition-transform"></i>
+                </a>
+                
+                <!-- Line -->
+                <a href="https://lin.ee/0ekc9BGY" target="_blank" class="w-12 h-12 flex items-center justify-center rounded-full border border-british-gold text-british-gold hover:bg-british-gold hover:text-british-green transition duration-300 text-xl group">
+                    <i class="fa-brands fa-line group-hover:scale-110 transition-transform"></i>
+                </a>
             </div>
         </div>
     </footer>
@@ -389,11 +932,22 @@
                 <div class="mt-2">
                     <p class="text-sm text-gray-500">Registration Confirmed</p>
                     <div class="w-16 h-px bg-british-gold mx-auto my-4"></div>
-                    <p class="text-british-text leading-relaxed">
-                        謝謝您的報名！<br>
-                        我們已收到您的資料，將於 24 小時內寄送匯款資訊至您的信箱。<br>
-                        <span class="text-xs text-gray-500 mt-2 block">(若未收到，請檢查垃圾郵件或私訊小編)</span>
-                    </p>
+                    
+                    <!-- 修改：更新報名成功訊息內容 -->
+                    <div class="text-british-text leading-relaxed text-sm md:text-base space-y-4">
+                        <p>
+                            謝謝您的報名！<br>
+                            小編收到報名資訊後，將以 <strong>IG 私訊</strong> 與您確認，<br>請留意訊息通知。
+                        </p>
+                        
+                        <p class="text-xs text-gray-500">
+                            (若於3日內未收到聯繫，請先確認 Email，<br>或主動私訊小編協助確認，感謝您的配合。)
+                        </p>
+                        
+                        <div class="bg-british-green/5 border border-british-green/20 rounded p-3 text-sm font-bold text-british-green mt-4">
+                            📢 開課與相關公告將統一於 IG 發布，<br>請關注「律色思維」以掌握最新資訊。
+                        </div>
+                    </div>
                 </div>
             </div>
             <!-- 按鈕 -->
@@ -408,6 +962,57 @@
 
     <!-- JavaScript 邏輯 -->
     <script>
+        // 側邊選單 (Side Menu) 開關功能
+        function toggleMenu() {
+            const menu = document.getElementById('side-menu');
+            const overlay = document.getElementById('menu-overlay');
+            
+            if (menu.classList.contains('open')) {
+                menu.classList.remove('open');
+                overlay.classList.remove('open');
+            } else {
+                menu.classList.add('open');
+                overlay.classList.add('open');
+            }
+        }
+
+        // FAQ 手風琴功能
+        function toggleFAQ(button) {
+            const answer = button.nextElementSibling;
+            const icon = button.querySelector('.faq-icon');
+
+            if (answer.classList.contains('open')) {
+                // 收合
+                answer.classList.remove('open');
+                icon.classList.remove('rotate');
+            } else {
+                // 展開前，如果希望一次只開一個，可以先關閉其他所有的 FAQ (選擇性)
+                // document.querySelectorAll('.faq-answer').forEach(el => el.classList.remove('open'));
+                // document.querySelectorAll('.faq-icon').forEach(el => el.classList.remove('rotate'));
+
+                // 展開
+                answer.classList.add('open');
+                icon.classList.add('rotate');
+            }
+        }
+
+        // 處理職業別「其他」選項的顯示/隱藏
+        function toggleOtherInput(selectElement) {
+            const otherContainer = document.getElementById('other_occupation_container');
+            const otherInput = document.getElementById('other_occupation_text');
+            
+            // 如果選中值為 __other_option__ (Google Form 的其他)，則顯示輸入框
+            if (selectElement.value === '__other_option__') {
+                otherContainer.classList.remove('hidden');
+                otherInput.required = true;
+                otherInput.focus();
+            } else {
+                otherContainer.classList.add('hidden');
+                otherInput.required = false;
+                otherInput.value = ''; // 清空輸入，避免送出錯誤資料
+            }
+        }
+
         // 處理表單送出後的 UI 變化 (由 iframe onload 觸發)
         function handleSuccessUI() {
             const modal = document.getElementById('successModal');
@@ -415,7 +1020,7 @@
             // 顯示彈出視窗
             modal.classList.remove('hidden');
             
-            // 加入淡入動畫效果 class (如果需要更複雜動畫可在此操作)
+            // 加入淡入動畫效果 class
             const modalContent = modal.querySelector('div[class*="transform"]');
             modalContent.classList.add('modal-enter-active');
 
@@ -423,6 +1028,9 @@
             const form = document.getElementById('courseForm');
             form.reset();
             submitted = false; // 重置標記
+            
+            // 重置下拉選單的「其他」輸入框狀態
+            document.getElementById('other_occupation_container').classList.add('hidden');
         }
 
         // 關閉彈出視窗
