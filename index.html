@@ -268,7 +268,7 @@
                 </button>
                 <button onclick="document.getElementById('register').scrollIntoView({ behavior: 'smooth' })" class="group relative px-8 py-4 bg-[#D4AF37] text-[#1A3C34] font-bold tracking-widest text-sm uppercase transition-all hover:bg-white hover:shadow-[0_0_20px_rgba(212,175,55,0.5)] cursor-pointer w-full md:w-auto">
                     <span class="flex items-center justify-center gap-2">
-                        預約報名 
+                        立即報名 
                         <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
                     </span>
                 </button>
@@ -300,16 +300,17 @@
                 <br>
                 越是退讓，對方越是得寸進尺...<br>
                 <br>
-                在職場與現實世界裡，
-                吃虧的往往不是沒道理，<br>
-                而是不懂得怎麼保護自己。<br>
+                在職場世界裡， 吃虧的往往不是沒道理，<br>
+                而是沒有抓對爭點、走錯程序，<br>
+                或在關鍵時刻毫無準備、不知道如何自保的人。<br>
                 <br>
                 這堂課，不教你硬碰硬，<br>
                 而是教你在關鍵時刻，用法律邏輯站穩立場，<br>
                 讓對方知道——你不是好惹的！<br>
                 <br>
-                這不只是一次學習，<br>
-                而是一套能反覆使用、長期保護你的專業武器。
+                這不只是一堂課，<br>
+                而是一套能在每一次職場衝突中，<br>
+                反覆使用、長期保護你的專業武器。
             </p>
             <div class="w-24 h-1 bg-british-gold mx-auto"></div>
         </div>
@@ -449,13 +450,18 @@
         </div>
     </section>
 
-    <!-- 課程資訊 (加入 ID="info") -->
-    <section id="info" class="py-20 px-6 bg-white border-b border-gray-200">
+   <section id="info" class="py-20 px-6 bg-white border-b border-gray-200">
         <div class="container mx-auto max-w-4xl">
-            <div class="text-center mb-12">
+            <div class="text-center mb-8">
                 <h3 class="text-british-gold font-sans uppercase tracking-widest text-sm font-bold mb-2">INFORMATION</h3>
                 <h2 class="text-3xl md:text-4xl font-bold text-british-green font-serif">課程資訊</h2>
-                <div class="w-16 h-1 bg-british-gold mx-auto mt-4"></div>
+                <div class="w-16 h-1 bg-british-gold mx-auto mt-4 mb-6"></div>
+                
+                <!-- 修改：更新限額說明文字 -->
+                <p class="text-british-green font-medium leading-relaxed bg-british-cream/50 inline-block px-6 py-3 rounded-lg border border-british-gold/20">
+                    本課程每場次僅開放 <span class="text-red-700 font-bold">50 名</span> 學員。
+                    名額額滿後將不再接受報名，敬請見諒。
+                </p>
             </div>
             
             <div class="grid md:grid-cols-2 gap-6 font-sans">
@@ -481,15 +487,25 @@
                     </div>
                 </div>
 
-                <!-- 3. 地點 (恢復為單格) -->
+                <!-- 3. 地點 (更新詳細地址) -->
                 <div class="flex p-6 border border-gray-200 bg-british-cream rounded-sm hover:border-british-gold transition duration-300">
                     <div class="text-4xl text-british-gold mr-5"><i class="fa-solid fa-map-location-dot"></i></div>
-                    <div>
-                        <h4 class="text-lg font-bold text-british-green mb-2">上課地點</h4>
-                        <p class="text-gray-700 leading-relaxed text-lg font-bold">
-                            課程確定開班後，將另行通知
-                        </p>
-                        <p class="text-sm text-gray-500 mt-1">將安排於交通便利的專業空間，方便學員前來上課。</p>
+                    <div class="w-full">
+                        <h4 class="text-lg font-bold text-british-green mb-3">上課地點</h4>
+                        <div class="space-y-3">
+                            <div class="border-b border-gray-300 pb-2">
+                                <span class="font-bold text-british-green block">台北場：小樹屋｜大葉桉</span>
+                                <a href="https://www.google.com/maps/search/?api=1&query=臺北市中山區民權西路20號" target="_blank" class="text-sm text-gray-600 hover:text-british-gold transition flex items-center mt-1">
+                                    臺北市中山區民權西路20號 <i class="fa-solid fa-arrow-up-right-from-square ml-1 text-xs"></i>
+                                </a>
+                            </div>
+                            <div>
+                                <span class="font-bold text-british-green block">台中場：WensCo文心會議室｜松竹館</span>
+                                <a href="https://www.google.com/maps/search/?api=1&query=台中市北屯區南興三路317號" target="_blank" class="text-sm text-gray-600 hover:text-british-gold transition flex items-center mt-1">
+                                    台中市北屯區南興三路317號 <i class="fa-solid fa-arrow-up-right-from-square ml-1 text-xs"></i>
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -514,7 +530,7 @@
                 </div>
             </div>
 
-            <!-- 底部權益聲明 (移至此處) -->
+            <!-- 底部權益聲明 -->
             <div class="mt-8 text-center text-xs text-gray-500 leading-relaxed border-t border-gray-200 pt-6 tracking-wide">
                 📌 主辦單位保留課程內容、講師、場次與授課方式調整之權利，如有異動將提前通知，不影響學員權益。
             </div>
@@ -548,7 +564,7 @@
                             <div class="faq-answer px-6 bg-gray-50">
                                 <div class="pb-6 pt-2 border-t border-gray-100">
                                     <p class="text-gray-700 leading-relaxed text-sm md:text-base">
-                                        本課程聚焦於職場勞資爭議中的法律責任判斷、調解程序與舉證策略，從實務角度解析職場衝突可能產生的法律影響，並協助學員在衝突發生時，清楚知道如何自保、不吃虧。
+                                        本課程聚焦於<strong>職場勞資爭議中的法律爭點判斷、調解程序與舉證策略</strong>，從實務角度解析職場衝突可能產生的法律影響，並協助學員在衝突發生時，清楚知道如何自保、不吃虧。
                                     </p>
                                 </div>
                             </div>
@@ -565,7 +581,7 @@
                             <div class="faq-answer px-6 bg-gray-50">
                                 <div class="pb-6 pt-2 border-t border-gray-100">
                                     <p class="text-gray-700 leading-relaxed text-sm md:text-base">
-                                        課程以實務為主、理論為輔，包含真實職場案例解析、常見衝突情境拆解，以及可立即應用的應對方式，協助學員在實際工作情境中有效運用。
+                                        課程以<strong>實務理論並進</strong>，包含真實職場案例解析、常見衝突情境拆解，協助學員在實際工作情境中有效運用。
                                     </p>
                                 </div>
                             </div>
@@ -585,7 +601,7 @@
                                         <p>本課程不偏向單一立場，而是以「實務操作與法律風險控管」為核心。</p>
                                         <p>課程將同時說明勞方與資方在職場衝突中的常見誤區與法律責任：</p>
                                         <ul class="list-disc pl-5 space-y-2">
-                                            <li><span class="font-bold text-british-green">對勞方而言：</span><br>學習如何保護自身生存權與勞動權益，掌握正確的舉證與溝通方式，避免在資訊不對稱或情緒衝突中反而成為不利的一方。</li>
+                                            <li><span class="font-bold text-british-green">對勞方而言：</span><br>學習如何保護身生存權與勞動權益，掌握正確的溝通與處理方式，避免在資訊不對稱或情緒衝突中反而成為不利的一方。</li>
                                             <li><span class="font-bold text-british-green">對資方／主管／人資而言：</span><br>學習建立合法的管理與溝通流程，從源頭降低違法風險，並在爭議發生時，以最合法、成本最低的方式進行調解與協商。</li>
                                         </ul>
                                         <p>無論您是一般員工、主管或人資角色，皆能從課程中理解自身立場及應注意的法律界線。</p>
@@ -624,7 +640,7 @@
                             <div class="faq-answer px-6 bg-gray-50">
                                 <div class="pb-6 pt-2 border-t border-gray-100">
                                     <p class="text-gray-700 leading-relaxed text-sm md:text-base">
-                                        可以。本課程以一般上班族為設計對象，不需具備法律背景，Eva 老師將以白話方式說明法律概念與實務應用。
+                                        <strong>可以</strong>。本課程以一般上班族為設計對象，不需具備法律背景，Eva 老師將以<strong>白話方式說明法律概念與實務應用</strong>。
                                     </p>
                                 </div>
                             </div>
@@ -641,7 +657,7 @@
                             <div class="faq-answer px-6 bg-gray-50">
                                 <div class="pb-6 pt-2 border-t border-gray-100">
                                     <p class="text-gray-700 leading-relaxed text-sm md:text-base">
-                                        本課程為【實體課程】，課程時數為 3 小時。
+                                        本課程為<strong>【實體課程】</strong>，課程時數為<strong> 3 小時</strong>。
                                     </p>
                                 </div>
                             </div>
@@ -659,48 +675,36 @@
                         <div class="bg-white border border-gray-200 shadow-sm hover:border-british-gold transition duration-300">
                             <button onclick="toggleFAQ(this)" class="w-full text-left p-6 flex justify-between items-center focus:outline-none">
                                 <h4 class="text-british-green font-bold text-lg flex items-start">
-                                    <span class="text-british-gold mr-3">Q7</span> 什麼是「預約募資制」？
+                                    <span class="text-british-gold mr-3">Q7</span> 報名流程？
                                 </h4>
                                 <i class="fa-solid fa-chevron-down text-british-gold faq-icon"></i>
                             </button>
                             <div class="faq-answer px-6 bg-gray-50">
                                 <div class="pb-6 pt-2 border-t border-gray-100">
                                     <p class="text-gray-700 leading-relaxed text-sm md:text-base">
-                                        本課程採【預約募資制】，請先填寫報名表。每一場次皆為獨立計算人數，單一場次滿 30 人就正式開班。未達開班人數前，不會進行收費。
+                                        請先填寫報名表，小編將於收到表單後以 IG 私訊與您聯絡確認，並提供繳費資訊。
                                     </p>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Q8 (原 Q7) -->
-                        <div class="bg-white border border-gray-200 shadow-sm hover:border-british-gold transition duration-300">
+                            <div class="bg-white border border-gray-200 shadow-sm hover:border-british-gold transition duration-300">
                             <button onclick="toggleFAQ(this)" class="w-full text-left p-6 flex justify-between items-center focus:outline-none">
                                 <h4 class="text-british-green font-bold text-lg flex items-start">
-                                    <span class="text-british-gold mr-3">Q8</span> 什麼時候需要繳費？
+                                    <span class="text-british-gold mr-3">Q8</span> 如何繳費?
                                 </h4>
                                 <i class="fa-solid fa-chevron-down text-british-gold faq-icon"></i>
                             </button>
                             <div class="faq-answer px-6 bg-gray-50">
                                 <div class="pb-6 pt-2 border-t border-gray-100">
-                                    <div class="text-gray-700 leading-relaxed text-sm md:text-base space-y-3">
-                                        <p>僅於課程確定開班後才需繳費。確認開班後，小編將以 IG 私訊 通知付款資訊，請於指定期限內完成繳費，完成繳費後方視為報名成功。</p>
-                                        <p>若未於期限內完成繳費，將視為放棄該次名額。</p>
-                                        <div class="bg-british-green/5 p-4 border-l-4 border-british-gold">
-                                            <p class="text-sm font-bold text-british-green mb-1">⚠️ 重要提醒</p>
-                                            <p class="text-sm">為保障已完成繳費學員權益及課程後續作業，未完成繳費者日後再次報名課程需先繳交 50% 訂金；累計 3 次者，將無法再參與本系列課程。若提前告知無法繳費之原因，則不適用上述規定。</p>
-                                        </div>
-                                    </div>
+                                    <p class="text-gray-700 leading-relaxed text-sm md:text-base">
+                                        完成報名表填寫後，小編將以 IG 私訊提供繳費資訊（匯款 / LINE Pay）。<br>
+                                        請於通知後 5 日內完成繳費，逾期名額將釋出。
+                                    </p>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
 
-                 <!-- 分類三 -->
-                <div>
-                    <h3 class="text-xl font-bold text-british-gold border-b-2 border-british-gold/30 pb-2 mb-6 inline-block">
-                        三、退費與名額使用相關
-                    </h3>
                     <div class="space-y-4">
                         <!-- Q9 (原 Q8) -->
                         <div class="bg-white border border-gray-200 shadow-sm hover:border-british-gold transition duration-300">
@@ -713,7 +717,7 @@
                             <div class="faq-answer px-6 bg-gray-50">
                                 <div class="pb-6 pt-2 border-t border-gray-100">
                                     <div class="text-gray-700 leading-relaxed text-sm md:text-base space-y-3">
-                                        <p>課程確定開班並完成繳費後，恕不提供退費服務。</p>
+                                        <p>完成繳費後，恕不提供退費服務。</p>
                                         <p>惟學員可選擇將已繳費用保留作為未來折抵，適用於：</p>
                                         <ul class="list-disc pl-5">
                                             <li>Eva 老師其他「職場法律系列課程」</li>
@@ -762,7 +766,7 @@
                     <p class="text-gray-500 text-sm font-sans">Registration Form</p>
                     <div class="divider-custom w-1/2 mx-auto"><i class="fa-solid fa-star text-xs"></i></div>
                     <!-- 修改提示文字 -->
-                    <p class="text-sm text-gray-600">請填寫資料，送出後，小編將於收到表單後以 IG 私訊與您確認。</p>
+                    <p class="text-sm text-gray-600">請填寫報名資料，<br>小編於收到表單後 IG 私訊與您確認，並提供匯款資訊。</p>
                 </div>
 
                 <script>var submitted = false;</script>
@@ -861,26 +865,36 @@
                     </div>
 
                     <!-- 9. 重要說明與確認 (必填) -->
-                    <div class="bg-british-green/5 p-6 border border-british-gold/30">
+                             <div class="bg-british-green/5 p-6 border border-british-gold/30">
                         <label class="block text-british-green font-bold mb-4 text-sm uppercase tracking-wide">重要說明與確認 <span class="text-red-500">*</span></label>
                         <div class="space-y-4">
                             <!-- 選項 1 -->
                             <label class="flex items-start cursor-pointer group">
                                 <div class="flex items-center h-6">
-                                    <input type="checkbox" name="entry.1981735458" value="我已了解本課程採【預約募資制】，滿 30 人就開班，確定開班後才需繳費；須於期限內完成繳費，未繳費視為放棄名額。" required class="form-checkbox h-5 w-5 text-british-gold border-gray-300 focus:ring-british-gold">
+                                    <input type="checkbox" name="entry.1981735458" value="我已了解本課程為 限額 50 名，名額以 完成繳費順序 保留，額滿即止。" required class="form-checkbox h-5 w-5 text-british-gold border-gray-300 focus:ring-british-gold">
                                 </div>
                                 <div class="ml-3 text-sm text-gray-700 leading-relaxed group-hover:text-british-green transition">
-                                    我已了解本課程採【預約募資制】，滿 30 人就開班，確定開班後才需繳費；須於期限內完成繳費，未繳費視為放棄名額。
+                                    我已了解本課程為 限額 50 名，名額以 完成繳費順序 保留，額滿即止。
                                 </div>
                             </label>
                             
-                            <!-- 選項 2 -->
+                            <!-- 選項 2 (已修正文字：移除「報」字) -->
                             <label class="flex items-start cursor-pointer group">
                                 <div class="flex items-center h-6">
-                                    <input type="checkbox" name="entry.1981735458" value="我已了解 未於期限內繳費者，日後再次報名需繳 50% 訂金；累計 3 次未繳費者，將無法再參與本系列課程。（提前告知原因者不適用）" required class="form-checkbox h-5 w-5 text-british-gold border-gray-300 focus:ring-british-gold">
+                                    <input type="checkbox" name="entry.1981735458" value="我已了解課程費用需於 5 日內完成繳費，逾期將視同放棄名額。" required class="form-checkbox h-5 w-5 text-british-gold border-gray-300 focus:ring-british-gold">
                                 </div>
                                 <div class="ml-3 text-sm text-gray-700 leading-relaxed group-hover:text-british-green transition">
-                                    我已了解 未於期限內繳費者，日後再次報名需繳 50% 訂金；累計 3 次未繳費者，將無法再參與本系列課程。（提前告知原因者不適用）
+                                    我已了解課程費用需於 5 日內完成繳費，逾期將視同放棄名額。
+                                </div>
+                            </label>
+
+                            <!-- 選項 3 -->
+                            <label class="flex items-start cursor-pointer group">
+                                <div class="flex items-center h-6">
+                                    <input type="checkbox" name="entry.1981735458" value="我已了解課程繳費後若無法參加，課程費用不可退費，但可保留作為未來折抵 Eva 老師其他「職場法律系列課程」或紅人學院課程（差額依未來課程費用補足或不退）。" required class="form-checkbox h-5 w-5 text-british-gold border-gray-300 focus:ring-british-gold">
+                                </div>
+                                <div class="ml-3 text-sm text-gray-700 leading-relaxed group-hover:text-british-green transition">
+                                    我已了解課程繳費後若無法參加，課程費用不可退費，但可保留作為未來折抵 Eva 老師其他「職場法律系列課程」或紅人學院課程（差額依未來課程費用補足或不退）。
                                 </div>
                             </label>
                         </div>
@@ -962,16 +976,16 @@
                     <div class="text-british-text leading-relaxed text-sm md:text-base space-y-4">
                         <p>
                             謝謝您的報名！<br>
-                            小編收到報名資訊後，將以 <strong>IG 私訊</strong> 與您確認，<br>請留意訊息通知。
+                            小編收到報名資訊後，<br>將 <strong>IG 私訊</strong> 與您確認並提供匯款資訊，<br>請留意訊息通知。
                         </p>
                         
                         <!-- 修改：將原本的「確認 Email」修正為符合現況的「檢查 IG 陌生訊息 / 透過 Line 聯繫」 -->
                         <p class="text-xs text-gray-500">
-                            (若於 3 日內未收到聯繫，請檢查 IG 陌生訊息，<br>或透過 <span class="text-british-green font-bold">官方 Line</span> 主動聯繫小編，感謝您的配合。)
+                            (若於 3 日內未收到聯繫，請檢查 IG 陌生訊息，<br>或 <span class="text-british-green font-bold">主動聯繫小編</span> ，感謝您的配合。)
                         </p>
                         
                         <div class="bg-british-green/5 border border-british-green/20 rounded p-3 text-sm font-bold text-british-green mt-4">
-                            📢 開課與相關公告將統一於 IG 發布，<br>請關注「律色思維」以掌握最新資訊。
+                            📢 課程相關公告將統一於 IG/FB 發布，<br>請關注「律色思維」以掌握最新資訊。
                         </div>
                     </div>
                 </div>
