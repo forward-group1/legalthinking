@@ -2,14 +2,15 @@
 <html lang="zh-TW">
 <head>
     <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-EL7CZN9MRR"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EL7CZN9MRR"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
 
-  gtag('config', 'G-EL7CZN9MRR');
-</script>
+      gtag('config', 'G-EL7CZN9MRR');
+    </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EVA職場法律-吵架篇 | 課程報名</title>
@@ -330,8 +331,14 @@
                     <div>
                         <h4 class="text-lg font-bold text-british-green mb-2">開課場次 & 日期</h4>
                         <ul class="text-gray-700 space-y-1">
-                            <li class="flex items-center"><span class="w-2 h-2 bg-british-gold rounded-full mr-2"></span>台北場：4/25 (六)</li>
-                            <li class="flex items-center"><span class="w-2 h-2 bg-british-gold rounded-full mr-2"></span>台中場：5/16 (六)</li>
+                            <li class="flex flex-wrap items-center">
+                                <span class="font-bold">台北場 (4/25)</span>
+                                <span class="ml-2 text-xs bg-red-100 text-red-700 px-2 py-1 rounded font-bold border border-red-200">4/17 報名截止</span>
+                            </li>
+                            <li class="flex flex-wrap items-center">
+                                <span class="font-bold text-british-green">台中場 (5/16)</span>
+                                <span class="ml-2 text-xs bg-red-100 text-red-700 px-2 py-1 rounded font-bold border border-red-200 shadow-sm">5/8 報名截止</span>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -992,18 +999,29 @@
 
                     <!-- 3. 場次 (必填) - 已與電話對調順序 -->
                     <div>
-                        <label class="block text-british-green font-bold mb-3 text-sm uppercase tracking-wide">場次 (Session) <span class="text-red-500">*</span></label>
+                        <label class="block text-british-green font-bold mb-3 text-sm uppercase font-serif">選擇課程場次 <span class="text-red-500">*</span></label>
                         <div class="space-y-3">
-                            <label class="flex items-center p-3 border border-gray-300 bg-white hover:border-british-gold cursor-pointer transition">
-                                <input type="radio" name="entry.1996132441" value="台北場 4/25(六)" required class="form-radio text-british-gold h-5 w-5 focus:ring-british-gold border-gray-300">
-                                <span class="ml-3 text-british-green font-medium">台北場 4/25(六)</span>
+                            <!-- 台北場 -->
+                            <label class="flex items-center p-4 border-2 border-british-gold/30 bg-white hover:border-british-gold cursor-pointer transition rounded shadow-sm relative group">
+                                <input type="radio" name="entry.1996132441" value="台北場 4/25(六) 4/17報名截止" required class="form-radio text-british-gold h-5 w-5">
+                                <div class="ml-4 flex flex-wrap items-center gap-2">
+                                    <span class="text-british-green font-bold">台北場 4/25(六)</span>
+                                    <span class="text-xs bg-red-50 text-red-600 px-2 py-0.5 rounded font-bold border border-red-200">4/17 報名截止</span>
+                                </div>
+                                <div class="absolute right-4 top-1/2 -translate-y-1/2 text-british-gold opacity-0 group-hover:opacity-100 transition"><i class="fa-solid fa-chevron-right"></i></div>
                             </label>
-                            <label class="flex items-center p-3 border border-gray-300 bg-white hover:border-british-gold cursor-pointer transition">
-                                <input type="radio" name="entry.1996132441" value="台中場 5/16(六)" required class="form-radio text-british-gold h-5 w-5 focus:ring-british-gold border-gray-300">
-                                <span class="ml-3 text-british-green font-medium">台中場 5/16(六)</span>
+                            <!-- 台中場 -->
+                            <label class="flex items-center p-4 border-2 border-british-gold/30 bg-white hover:border-british-gold cursor-pointer transition rounded shadow-sm relative group">
+                                <input type="radio" name="entry.1996132441" value="台中場 5/16(六) 5/8報名截止" required class="form-radio text-british-gold h-5 w-5">
+                                <div class="ml-4 flex flex-wrap items-center gap-2">
+                                    <span class="text-british-green font-bold">台中場 5/16(六)</span>
+                                    <span class="text-xs bg-red-50 text-red-600 px-2 py-0.5 rounded font-bold border border-red-200">5/8 報名截止</span>
+                                </div>
+                                <div class="absolute right-4 top-1/2 -translate-y-1/2 text-british-gold opacity-0 group-hover:opacity-100 transition"><i class="fa-solid fa-chevron-right"></i></div>
                             </label>
                         </div>
                     </div>
+                    <div>
 
                     <!-- 4. 聯絡電話 (必填) - 已與場次對調順序 -->
                     <div>
