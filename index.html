@@ -954,8 +954,8 @@
         </div>
     </section>
 
-    <!-- 報名表單區塊 (核心功能) -->
-    <section id="register" class="py-24 px-6 relative">
+       <!-- 報名表單區塊 -->
+    <section id="register" class="py-20 px-6 relative">
         <div class="container mx-auto max-w-2xl">
             
             <div class="bg-british-cream p-8 md:p-12 shadow-2xl double-border relative z-10">
@@ -965,9 +965,8 @@
 
                 <div class="text-center mb-10 mt-4">
                     <h2 class="text-3xl font-bold text-british-green mb-2">課程報名表</h2>
-                    <p class="text-gray-500 text-sm font-sans">Registration Form</p>
+                    <p class="text-gray-500 text-sm font-sans uppercase tracking-widest">Registration Form</p>
                     <div class="divider-custom w-1/2 mx-auto"><i class="fa-solid fa-star text-xs"></i></div>
-                    <!-- 修改提示文字 -->
                     <p class="text-sm text-gray-600">請填寫報名資料，<br>小編於收到表單後 IG 私訊與您確認，並提供匯款資訊。</p>
                 </div>
 
@@ -979,149 +978,121 @@
                       method="POST" 
                       target="hidden_iframe" 
                       class="space-y-6" 
-                      onsubmit="submitted=true;">
+                      onsubmit="handleFormSubmit(event)">
                     
-                    <!-- 1. 姓名 (必填) -->
+                    <!-- 1. 姓名 -->
                     <div>
-                        <label for="name" class="block text-british-green font-bold mb-2 text-sm uppercase tracking-wide">姓名 (Full Name) <span class="text-red-500">*</span></label>
-                        <input type="text" id="name" name="entry.255761638" required class="w-full bg-white border border-gray-300 p-3 text-british-green form-input placeholder-gray-400" placeholder="請輸入您的姓名">
+                        <label class="block text-british-green font-bold mb-2 text-sm uppercase tracking-wide">姓名 (Full Name) <span class="text-red-500">*</span></label>
+                        <input type="text" name="entry.255761638" required class="w-full bg-white border border-gray-300 p-3 text-british-green form-input placeholder-gray-400" placeholder="請輸入您的姓名">
                     </div>
 
-                    <!-- 2. Instagram 帳號 (必填) -->
+                    <!-- 2. Instagram 帳號 -->
                     <div>
-                        <label for="instagram" class="block text-british-green font-bold mb-2 text-sm uppercase tracking-wide">Instagram 帳號 <span class="text-red-500">*</span></label>
-                        <input type="text" id="instagram" name="entry.1574080863" required class="w-full bg-white border border-gray-300 p-3 text-british-green form-input placeholder-gray-400" placeholder="your_instagram_id">
+                        <label class="block text-british-green font-bold mb-2 text-sm uppercase tracking-wide">Instagram 帳號 <span class="text-red-500">*</span></label>
+                        <input type="text" name="entry.1574080863" required class="w-full bg-white border border-gray-300 p-3 text-british-green form-input placeholder-gray-400" placeholder="your_instagram_id">
                         <p class="text-xs text-gray-500 mt-2 leading-relaxed">
-                            請填寫正確可搜尋的 IG 帳號，以利後續通知。<br>
-                            如無 IG，請填寫 FB 帳號，並於送出表單後主動私訊小編告知，謝謝 😊
+                            請填寫正確可搜尋的 IG 帳號。如無 IG 請填 FB 並私訊告知 😊
                         </p>
                     </div>
 
-                    <!-- 3. 場次 (必填) - 已與電話對調順序 -->
+                    <!-- 3. 場次 -->
                     <div>
-                        <label class="block text-british-green font-bold mb-3 text-sm uppercase font-serif">選擇課程場次 <span class="text-red-500">*</span></label>
+                        <label class="block text-british-green font-bold mb-3 text-sm uppercase font-serif text-british-green">選擇課程場次 <span class="text-red-500">*</span></label>
                         <div class="space-y-3">
-                            <!-- 台北場 -->
-                            <label class="flex items-center p-4 border-2 border-british-gold/30 bg-white hover:border-british-gold cursor-pointer transition rounded shadow-sm relative group">
-                                <input type="radio" name="entry.1996132441" value="台北場 4/25(六) 4/17報名截止" required class="form-radio text-british-gold h-5 w-5">
-                                <div class="ml-4 flex flex-wrap items-center gap-2">
+                            <!-- 台北場 (Value 必須精確符合後台字串) -->
+                            <label class="flex items-center p-4 border-2 border-british-gold/30 bg-white hover:border-british-gold cursor-pointer transition rounded shadow-sm group">
+                                <input type="radio" name="entry.1996132441" value="台北場 4/25(六) 4/17 報名截止" required class="form-radio text-british-gold h-5 w-5">
+                                <div class="ml-4 flex items-center flex-wrap gap-2">
                                     <span class="text-british-green font-bold">台北場 4/25(六)</span>
                                     <span class="text-xs bg-red-50 text-red-600 px-2 py-0.5 rounded font-bold border border-red-200">4/17 報名截止</span>
                                 </div>
-                                <div class="absolute right-4 top-1/2 -translate-y-1/2 text-british-gold opacity-0 group-hover:opacity-100 transition"><i class="fa-solid fa-chevron-right"></i></div>
                             </label>
-                            <!-- 台中場 -->
-                            <label class="flex items-center p-4 border-2 border-british-gold/30 bg-white hover:border-british-gold cursor-pointer transition rounded shadow-sm relative group">
-                                <input type="radio" name="entry.1996132441" value="台中場 5/16(六) 5/8報名截止" required class="form-radio text-british-gold h-5 w-5">
-                                <div class="ml-4 flex flex-wrap items-center gap-2">
-                                    <span class="text-british-green font-bold">台中場 5/16(六)</span>
-                                    <span class="text-xs bg-red-50 text-red-600 px-2 py-0.5 rounded font-bold border border-red-200">5/8 報名截止</span>
+                            <!-- 台中場 (Value 必須精確符合後台字串) -->
+                            <label class="flex items-center p-4 border-2 border-british-gold/30 bg-white hover:border-british-gold cursor-pointer transition rounded shadow-sm group">
+                                <input type="radio" name="entry.1996132441" value="台中場 5/16(六) 5/8 報名截止" required class="form-radio text-british-gold h-5 w-5">
+                                <div class="ml-4 flex items-center flex-wrap gap-2">
+                                    <span class="text-british-green font-bold text-lg">台中場 5/16(六)</span>
+                                    <span class="text-xs bg-red-50 text-red-700 px-2 py-0.5 rounded font-bold border border-red-200 shadow-sm">5/8 報名截止</span>
                                 </div>
-                                <div class="absolute right-4 top-1/2 -translate-y-1/2 text-british-gold opacity-0 group-hover:opacity-100 transition"><i class="fa-solid fa-chevron-right"></i></div>
                             </label>
                         </div>
                     </div>
-                    <div>
 
-                    <!-- 4. 聯絡電話 (必填) - 已與場次對調順序 -->
+                    <!-- 4. 聯絡電話 -->
                     <div>
-                        <label for="phone" class="block text-british-green font-bold mb-2 text-sm uppercase tracking-wide">聯絡電話 (Phone) <span class="text-red-500">*</span></label>
-                        <input type="tel" id="phone" name="entry.922447564" required class="w-full bg-white border border-gray-300 p-3 text-british-green form-input placeholder-gray-400" placeholder="09xx-xxx-xxx">
+                        <label class="block text-british-green font-bold mb-2 text-sm uppercase tracking-wide">聯絡電話 (Phone) <span class="text-red-500">*</span></label>
+                        <input type="tel" name="entry.922447564" required class="w-full bg-white border border-gray-300 p-3 text-british-green form-input placeholder-gray-400" placeholder="09xx-xxx-xxx">
                     </div>
 
-                    <!-- 5. 信箱 (必填) -->
+                    <!-- 5. 電子信箱 -->
                     <div>
-                        <label for="email" class="block text-british-green font-bold mb-2 text-sm uppercase tracking-wide">電子信箱 (Email) <span class="text-red-500">*</span></label>
-                        <input type="email" id="email" name="entry.177261986" required class="w-full bg-white border border-gray-300 p-3 text-british-green form-input placeholder-gray-400" placeholder="example@email.com">
+                        <label class="block text-british-green font-bold mb-2 text-sm uppercase tracking-wide">電子信箱 (Email) <span class="text-red-500">*</span></label>
+                        <input type="email" name="entry.177261986" required class="w-full bg-white border border-gray-300 p-3 text-british-green form-input placeholder-gray-400" placeholder="example@email.com">
                     </div>
 
-                    <!-- 6. 職業別 (選填) - 下拉選單改版 -->
+                    <!-- 6. 職業別 -->
                     <div>
-                        <label for="occupation" class="block text-british-green font-bold mb-2 text-sm uppercase tracking-wide">職業別 (Occupation) <span class="text-gray-500 font-normal normal-case">(選填)</span></label>
+                        <label class="block text-british-green font-bold mb-2 text-sm uppercase tracking-wide">職業別 (Occupation) <span class="text-gray-500 font-normal">(選填)</span></label>
                         <div class="relative">
-                            <!-- 修改：移除 required 屬性 -->
-                            <select id="occupation" name="entry.1645565300" class="w-full bg-white border border-gray-300 p-3 text-british-green form-input appearance-none cursor-pointer" onchange="toggleOtherInput(this)">
+                            <!-- 移除 name 屬性，我們改用 JavaScript 動態控制提交 -->
+                            <select id="occupation-select" class="w-full bg-white border border-gray-300 p-3 text-british-green form-input appearance-none cursor-pointer" onchange="toggleOtherInput(this)">
                                 <option value="" disabled selected>請選擇您的職業類別...</option>
                                 <option value="一般上班族">一般上班族</option>
                                 <option value="企業主／老闆">企業主／老闆</option>
                                 <option value="主管／管理職">主管／管理職</option>
                                 <option value="HR／人資">HR／人資</option>
                                 <option value="自由接案／自營者">自由接案／自營者</option>
-                                <option value="__other_option__">其他</option>
+                                <option value="__other_option__">其他 (自行輸入)</option>
                             </select>
-                            <!-- 下拉選單箭頭圖示 -->
                             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-british-gold">
                                 <i class="fa-solid fa-chevron-down"></i>
                             </div>
                         </div>
-                        
-                        <!-- 其他選項輸入框 (預設隱藏) -->
                         <div id="other_occupation_container" class="hidden mt-3">
-                            <label for="other_occupation_text" class="block text-sm text-gray-600 mb-1">請輸入其他職業：</label>
-                            <input type="text" id="other_occupation_text" name="entry.1645565300.other_option_response" class="w-full bg-white border border-gray-300 p-2 text-british-green form-input placeholder-gray-400 border-b-2 focus:border-british-gold outline-none" placeholder="請輸入...">
+                            <input type="text" id="other_occupation_text" class="w-full bg-white border border-gray-300 p-2 text-british-green form-input focus:border-british-gold outline-none" placeholder="請輸入您的職業">
                         </div>
+                        <!-- 實際提交給 Google 的隱藏欄位 -->
+                        <input type="hidden" name="entry.1645565300" id="occupation-hidden">
                     </div>
 
                     <!-- 7. 想詢問的問題 -->
                     <div>
-                        <label for="message" class="block text-british-green font-bold mb-2 text-sm uppercase tracking-wide">想詢問的問題？</label>
-                        <textarea id="message" name="entry.1357532118" rows="3" class="w-full bg-white border border-gray-300 p-3 text-british-green form-input placeholder-gray-400" placeholder="你的職場疑問..."></textarea>
+                        <label class="block text-british-green font-bold mb-2 text-sm uppercase tracking-wide">想詢問的問題？</label>
+                        <textarea name="entry.1357532118" rows="3" class="w-full bg-white border border-gray-300 p-3 text-british-green form-input" placeholder="如果有想請教 Eva 老師的職場疑問..."></textarea>
                     </div>
 
                     <!-- 8. 優惠碼 -->
                     <div>
-                        <label for="promo" class="block text-british-green font-bold mb-2 text-sm uppercase tracking-wide">優惠碼</label>
-                        <input type="text" id="promo" name="entry.1016751022" class="w-full bg-white border border-gray-300 p-3 text-british-green form-input placeholder-gray-400" placeholder="若有優惠碼請在此輸入">
-                        <!-- 新增備註文字 -->
-                        <p class="text-xs text-gray-500 mt-2">
-                            （未填寫者恕不適用優惠價格）
-                        </p>
+                        <label class="block text-british-green font-bold mb-2 text-sm uppercase tracking-wide">優惠碼 (Promo Code)</label>
+                        <input type="text" name="entry.1016751022" class="w-full bg-white border border-gray-300 p-3 text-british-green form-input" placeholder="若有優惠碼請在此輸入">
+                        <p class="text-xs text-gray-500 mt-2">（未填寫者恕不適用優惠價格）</p>
                     </div>
 
-                    <!-- 9. 重要說明與確認 (必填) -->
-                             <div class="bg-british-green/5 p-6 border border-british-gold/30">
+                    <!-- 9. 重要說明確認 -->
+                    <div class="bg-british-green/5 p-6 border border-british-gold/30 rounded-sm">
                         <label class="block text-british-green font-bold mb-4 text-sm uppercase tracking-wide">重要說明與確認 <span class="text-red-500">*</span></label>
                         <div class="space-y-4">
-                            <!-- 選項 1 -->
                             <label class="flex items-start cursor-pointer group">
-                                <div class="flex items-center h-6">
-                                    <input type="checkbox" name="entry.1981735458" value="我已了解本課程為 限額 50 名，名額以 完成繳費順序 保留，額滿即止。" required class="form-checkbox h-5 w-5 text-british-gold border-gray-300 focus:ring-british-gold">
-                                </div>
-                                <div class="ml-3 text-sm text-gray-700 leading-relaxed group-hover:text-british-green transition">
-                                    我已了解本課程為 限額 50 名，名額以 完成繳費順序 保留，額滿即止。
-                                </div>
+                                <input type="checkbox" name="entry.1981735458" value="我已了解本課程為 限額 50 名，名額以 完成繳費順序 保留，額滿即止。" required class="mt-1 form-checkbox text-british-gold">
+                                <span class="ml-3 text-sm text-gray-700 leading-relaxed">我已了解本課程為 限額 50 名，名額以 <strong>完成繳費順序</strong> 保留。</span>
                             </label>
-                            
-                            <!-- 選項 2 (已修正文字：移除「報」字) -->
                             <label class="flex items-start cursor-pointer group">
-                                <div class="flex items-center h-6">
-                                    <input type="checkbox" name="entry.1981735458" value="我已了解課程費用需於 5 日內完成繳費，逾期將視同放棄名額。" required class="form-checkbox h-5 w-5 text-british-gold border-gray-300 focus:ring-british-gold">
-                                </div>
-                                <div class="ml-3 text-sm text-gray-700 leading-relaxed group-hover:text-british-green transition">
-                                    我已了解課程費用需於 5 日內完成繳費，逾期將視同放棄名額。
-                                </div>
+                                <input type="checkbox" name="entry.1981735458" value="我已了解課程費用需於 5 日內完成繳費，逾期將視同放棄名額。" required class="mt-1 form-checkbox text-british-gold">
+                                <span class="ml-3 text-sm text-gray-700 leading-relaxed">我已了解課程費用需於 <strong>5 日內完成繳費</strong>，逾期將視同放棄名額。</span>
                             </label>
-
-                            <!-- 選項 3 -->
                             <label class="flex items-start cursor-pointer group">
-                                <div class="flex items-center h-6">
-                                    <input type="checkbox" name="entry.1981735458" value="我已了解課程繳費後若無法參加，課程費用不可退費，但可保留作為未來折抵 Eva 老師其他「職場法律系列課程」或紅人學院課程（差額依未來課程費用補足或不退）。" required class="form-checkbox h-5 w-5 text-british-gold border-gray-300 focus:ring-british-gold">
-                                </div>
-                                <div class="ml-3 text-sm text-gray-700 leading-relaxed group-hover:text-british-green transition">
-                                    我已了解課程繳費後若無法參加，課程費用不可退費，但可保留作為未來折抵 Eva 老師其他「職場法律系列課程」或紅人學院課程（差額依未來課程費用補足或不退）。
-                                </div>
+                                <input type="checkbox" name="entry.1981735458" value="我已了解課程繳費後若無法參加，課程費用不可退費，但可保留作為未來折抵 Eva 老師其他「職場法律系列課程」或紅人學院課程（差額依未來課程費用補足或不退）。" required class="mt-1 form-checkbox text-british-gold">
+                                <span class="ml-3 text-sm text-gray-700 leading-relaxed">我已了解課程繳費後<strong>恕不退費</strong>，但可保留折抵未來相關課程。</span>
                             </label>
                         </div>
                     </div>
 
                     <!-- 提交按鈕 -->
-                    <button type="submit" id="submitBtn" class="w-full bg-british-green text-british-gold font-bold py-4 uppercase tracking-widest hover:bg-british-lightGreen transition duration-300 border border-british-gold shadow-lg mt-4">
-                        確認送出資料
+                    <button type="submit" id="submitBtn" class="w-full bg-british-green text-british-gold font-bold py-4 uppercase tracking-widest hover:bg-british-lightGreen transition border border-british-gold shadow-lg mt-4">
+                        確認送出報名資料
                     </button>
                     
-                    <p class="text-xs text-center text-gray-500 mt-4">
-                        * 送出即代表同意本課程之隱私權政策與退費規範。
-                    </p>
+                    <p class="text-xs text-center text-gray-500 mt-4">* 送出即代表同意本課程之隱私權政策與退費規範。</p>
                 </form>
             </div>
         </div>
